@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const TimKiem = () => {
+const Sach = () => {
   return (
     <View>
-      <Text>TimKiem</Text>
+      <Text>Sach</Text>
     </View>
   )
 }
 
-export default TimKiem
+export default Sach
 
 const styles = StyleSheet.create({})
