@@ -23,6 +23,7 @@ const BottomNavigation = () => {
       tabBarActiveTintColor: color.xanh,
       tabBarInactiveTintColor: color.xanh,
       tabBarShowLabel: false,
+  
       
       tabBarIcon: ({ focused }) => {
         let screenName = route.name;
@@ -47,7 +48,7 @@ const BottomNavigation = () => {
     })}
     
     >
-      <Tab.Screen name='TrangChu' component={TrangChu}/>
+      <Tab.Screen name='TrangChu' component={TrangChu} />
       <Tab.Screen name='Sach' component={Sach}/>
       <Tab.Screen name='DonMuon' component={DonMuon}/>
       <Tab.Screen name='Khac' component={Khac}/>
