@@ -2,6 +2,7 @@ import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } 
 import React from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
+import { ScrollViewComponent } from 'react-native';
 
 let duLieu = [
   { id: 1, name: 'Hài Hước '},
@@ -19,6 +20,8 @@ let duLieubook = [
   { id: 1, tensach: 'Sách 18+ 2023 ', tacgia:"Dũng", giamuon:200 },
   { id: 2, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
   { id: 3, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
+  { id: 4, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
+  { id: 5, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
 
 
 ]
@@ -62,7 +65,7 @@ const Sach = () => {
 
 
   return (
-    <ScrollView >
+
       <View style={styles.container}>
         <View style={{ backgroundColor: 'white', margin: 5, elevation: 10, borderRadius: 10 }}>
           <View style={{
@@ -84,7 +87,7 @@ const Sach = () => {
             </Text>
           </View>
           
-          <View style={{  flex:1 }}>
+          <View style={{  }}>
               <FlatList
                 data={duLieu}
                 keyExtractor={item => item.id}
@@ -98,7 +101,7 @@ const Sach = () => {
 
         </View>
 
- <View style={{ backgroundColor: 'white', margin: 5, elevation: 10, borderRadius: 10 }}>
+        <View style={{ backgroundColor: 'white', margin: 5, elevation: 10, borderRadius: 10 }}>
           <View style={{
             padding: 7,
             width: '95%',
@@ -118,22 +121,22 @@ const Sach = () => {
             </Text>
           </View>
           
-          <View style={{  flex:1 }}>
+          <View style={{height:'70%'  }}>
               <FlatList
                 data={duLieubook}
                 keyExtractor={item => item.id}
                 renderItem={renderBook}
                 numColumns={numColumns2}
+                horizontal={false}
               >
+
               </FlatList>
           </View>
-
-
 
         </View>
 
       </View>
-    </ScrollView>
+
    
   )
 }
@@ -142,6 +145,9 @@ export default Sach
 
 const styles = StyleSheet.create({
 
+  container:{
+     height:'100%'
+  },
   imageSP: {
     width: 30, height:30,
   },
