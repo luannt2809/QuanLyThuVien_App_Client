@@ -1,4 +1,5 @@
 import {
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -9,9 +10,10 @@ import React from "react";
 import color from "./color";
 import ItemHoaDon from "./ItemHoaDon";
 
-const DoanhThuNgayChiTiet = () => {
+const DoanhThuNgayChiTiet = (props) => {
+  const list = [1,2,3,4,5]
   return (
-    <View style={{padding:10}}>
+    <View style={{padding:10,flex:1}}>
       <View style={{ flexDirection: "row"}}>
         <View style={{flex:1,marginRight:5}}>
           <View style={{ margin: 5 }}>
@@ -37,11 +39,23 @@ const DoanhThuNgayChiTiet = () => {
         </View>
 
       </View>
-      <View style={{marginTop:20,padding:10,flexDirection:'row'}}>
+      <View style={{marginTop:20,padding:10,flexDirection:'row'}} >
         <Text style={{marginRight:10}}>Tổng tiền</Text>
-        <Text>22222222222222 vnđ</Text>
+        <Text  >22222222222222 vnđ</Text>
       </View>
-      <ItemHoaDon/>
+      <View style={{marginLeft:10,flexDirection:'row',marginBottom:20}} >
+        <Text style={{marginRight:10}}>Tổng số</Text>
+        <Text  >12 phiếu mượn</Text>
+      </View>
+      <View style={{flex:1}}>
+        <FlatList
+        data={list}
+        renderItem={({item})=>
+        <ItemHoaDon />
+      }
+        />
+      </View>
+      
     </View>
   );
 };
