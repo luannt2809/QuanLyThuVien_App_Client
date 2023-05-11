@@ -1,31 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity, View,TextInput, Image } from 'react-native'
-import React, { Component } from 'react'
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
-// export class ShowHidePassword extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       hidepassword: true
-//     }
-//   }
-//   setPasswordVisibility = () => {
-//     this.setState({hidepassword: !this.state.hidepassword});
-//   }
-//   render() {
-//     return (
-//       <View style={{marginTop:100}}>
-//         <TextInput secureTextEntry={this.state.hidepassword} style={styles.textBox}></TextInput>
-//         <TouchableOpacity onPress={this.setPasswordVisibility}>
-//           <Text style={styles.texShowHide}>{!this.state.hidepassword ? 'Ẩn' : 'Hiện'}</Text>
-//         </TouchableOpacity>
-//       </View>
-//     )
-//   }
-// }
-// export default ShowHidePassword
-
 const Login = (props) => {
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <View style={{flex:1,alignItems:'center',backgroundColor:"#fff",paddingTop:180}}>
       <Image style={{width:100,height:100,alignSelf:'center',marginBottom:40}} source={require('../assets//library.png')}/>
@@ -33,11 +16,17 @@ const Login = (props) => {
       <View>
         <View style={styles.boxInput1}>
           <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//user.png')}/>
-          <TextInput style={{paddingLeft:10}}  placeholder='Username' textContentType={'username'}/>
+          <TextInput style={styles.boxInput2}  placeholder='Username' textContentType={'username'}/>
         </View>
         <View style={styles.boxInput1}>
           <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//passwd.png')}/>
-          <TextInput style={{paddingLeft:10}} placeholder='Password' textContentType='password' secureTextEntry={true}/>
+          <TextInput style={styles.boxInput2} placeholder='Password' textContentType='password' secureTextEntry={!showPassword}/>   
+          {/* <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//hidepasswd.png')}/> */}
+
+          <TouchableOpacity onPress={toggleShowPassword} style={{justifyContent:'center'}}>
+            <Text>{showPassword ? <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//showpasswd.png')}/> : <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//hidepasswd.png')}/>}</Text>
+            
+          </TouchableOpacity>
         </View>
       </View>
       <TouchableOpacity
@@ -76,6 +65,17 @@ const styles = StyleSheet.create({
     borderColor:"#EEEEEE",
     backgroundColor:"#EEEEEE",
     marginTop:10,
+    padding:5,
+    borderRadius:10,
+  },
+  boxInput2:{
+    width:250,
+    height:38,
+    fontSize:20,
+    color:'black',
+    borderColor:"#EEEEEE",
+    backgroundColor:"#EEEEEE",
+    borderWidth:2,
     padding:5,
     borderRadius:10,
   },
