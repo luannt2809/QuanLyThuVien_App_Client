@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import TrangChu from './TrangChu';
-import TimKiem from './TimKiem';
+import TimKiem from './Sach';
 import DonMuon from './DonMuon';
 import Khac from './Khac';
 import color from './color';
@@ -11,6 +11,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import Sach from './Sach';
 
 
 
@@ -29,9 +30,9 @@ const BottomNavigation = () => {
           return (
             <Entypo name="home" size={24} color={focused ? color.xanh : color.den}/>
           );
-        } else if (screenName == "TimKiem") {
+        } else if (screenName == "Sach") {
           return (
-            <FontAwesome name="search" size={22} color={focused ? color.xanh : color.den} />
+            <Ionicons name="book" size={22} color={focused ? color.xanh : color.den} />
           );
         } else if (screenName == "DonMuon") {
           return (
@@ -47,7 +48,7 @@ const BottomNavigation = () => {
     
     >
       <Tab.Screen name='TrangChu' component={TrangChu}/>
-      <Tab.Screen name='TimKiem' component={TimKiem}/>
+      <Tab.Screen name='Sach' component={Sach}/>
       <Tab.Screen name='DonMuon' component={DonMuon}/>
       <Tab.Screen name='Khac' component={Khac}/>
     </Tab.Navigator>
