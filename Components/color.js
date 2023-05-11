@@ -1,3 +1,3 @@
 export default {
-    xanh:'#584CF4'
+    xanh:'#584CF4',
 }

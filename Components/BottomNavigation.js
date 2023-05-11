@@ -23,6 +23,7 @@ const BottomNavigation = () => {
       tabBarActiveTintColor: color.xanh,
       tabBarInactiveTintColor: color.xanh,
       tabBarShowLabel: false,
+  
       
       tabBarIcon: ({ focused }) => {
         let screenName = route.name;
