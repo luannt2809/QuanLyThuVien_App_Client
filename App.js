@@ -12,6 +12,8 @@ import SachDangMuon from './Components/SachDangMuon';
 import SachQuaHan from './Components/SachQuaHan';
 import SachHomNayTra from './Components/SachHomNayTra';
 import SachHomNayMuon from './Components/SachHomNayMuon';
+import ItemHoaDon from './Components/ItemHoaDon';
+import DoanhThuThangChiTiet from './Components/DoanhThuThangChiTiet';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -33,11 +35,13 @@ export default function App() {
         <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
         <Stack.Screen name="Bottom" component={BottomNavigation} options={{headerShown:false}}/>  
         <Stack.Screen name='DoanhThuNgayChiTiet' component={DoanhThuNgayChiTiet} options={{title:"Doanh thu theo ngày"}}/>
-        <Stack.Screen name='ChiTietPhieuMuon' component={ChiTietPhieuMuon}/>
-        <Stack.Screen name='SachDangMuon' component={SachDangMuon}/>
-        <Stack.Screen name='SachQuaHan' component={SachQuaHan}/>
-        <Stack.Screen name='SachHomNayTra' component={SachHomNayTra}/>
-        <Stack.Screen name='SachHomNayMuon' component={SachHomNayMuon}/>
+        <Stack.Screen name='ChiTietPhieuMuon' component={ChiTietPhieuMuon} options={{title:"Chi tiết phiếu mượn"}}/>
+        <Stack.Screen name='SachDangMuon' component={SachDangMuon} options={{title:"Phiếu mượn chưa đến hạn trả"}}/>
+        <Stack.Screen name='SachQuaHan' component={SachQuaHan} options={{title:"Phiếu mượn quá hạn trả"}}/>
+        <Stack.Screen name='SachHomNayTra' component={SachHomNayTra} options={{title:"Phiếu mượn hôm nay trả"}}/>
+        <Stack.Screen name='SachHomNayMuon' component={SachHomNayMuon} options={{title:"Phiếu mượn hôm nay"}}/>
+        <Stack.Screen name='ItemHoaDon' component={ItemHoaDon}/>
+        <Stack.Screen name='DoanhThuThangChiTiet' component={DoanhThuThangChiTiet} options={{title:'Doanh thu theo tháng'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

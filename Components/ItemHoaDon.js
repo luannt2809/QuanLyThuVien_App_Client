@@ -1,10 +1,12 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import color from './color'
+import { useNavigation } from '@react-navigation/core'
 
-const ItemHoaDon = () => {
+const ItemHoaDon = (props) => {
+    const navigation = useNavigation();
   return (
-    <View style={{backgroundColor:'white',borderRadius:10}}>
+    <View style={{backgroundColor:'white',borderRadius:10,marginVertical:10}}>
       <View style={{backgroundColor:color.xanh,borderTopLeftRadius:10,borderTopRightRadius:10,padding:10}}>
         <Text style={{fontSize:20,color:'white'}}>Khuất Phi Long</Text>
       </View>
@@ -25,13 +27,22 @@ const ItemHoaDon = () => {
 
       </View>
       <View style={{margin:10,flexDirection:'row'}}>
+        <View style={{flexDirection:'row',flex:1}}>
+
+        
         <Image
         source={require('../Image/tong_tien.png')}
         style={{width:30,height:30}}
         />
         <View>
-        <Text>123131313 vnđ</Text>
+        <Text style={{marginLeft:10,marginTop:5,fontSize:18}}>123131313 vnđ</Text>
         </View>
+        </View>
+        <TouchableOpacity
+         onPress={()=>navigation.navigate("ChiTietPhieuMuon")}
+        >
+            <Text style={{color:color.xanh}}>Chi tiết</Text>
+        </TouchableOpacity>
       </View>
       
       
