@@ -8,13 +8,12 @@ let duLieubook = [
     { id: 2, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
     { id: 3, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
     { id: 4, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
-    { id: 5, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
-
+    { id: 5, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 }
 
 ]
 const numColumns = 2;
 
-const TimkiemSach = () => {
+const TimkiemSach = (props) => {
 
     const renderBook = ({ item }) => {
         return (
@@ -28,7 +27,7 @@ const TimkiemSach = () => {
                 <Text style={{ fontWeight: 'bold', color: '#333333', fontSize: 18 }}>{item.tensach}</Text>
                 <Text style={{ fontWeight: '300', color: '#333333' }}>{item.tacgia}</Text>
                 <Text style={{ fontWeight: '600', color: 'red' }}>$ {item.giamuon}</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate("ChiTietSach")}>
                     <Text style={{textAlign:"left", alignItems:'flex-start', fontStyle:'italic', textDecorationLine:'underline'}}>Chi Tiết</Text>
                 </TouchableOpacity>
             </View>
