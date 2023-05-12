@@ -13,6 +13,9 @@ let duLieu = [
     { id: 7, name: 'Hài Hước ', vitri: "4A" },
     { id: 8, name: 'Kinh Dị ', vitri: "4A" },
     { id: 9, name: 'Tình Yêu ', vitri: "4A" },
+    { id: 10, name: 'Hài Hước ', vitri: "4A" },
+    { id: 11, name: 'Kinh Dị ', vitri: "4A" },
+    { id: 12, name: 'Tình Yêu ', vitri: "4A" },
 ]
 
 const numColumns = 2;
@@ -67,7 +70,7 @@ const Loaisach = (props) => {
                   </TextInput>
               </View>
 
-              <View style={{height:'90%'}}>
+              <View style={{height:'90%', paddingEnd:20}}>
                   <FlatList
                       data={duLieu}
                       keyExtractor={item => item.id}
@@ -88,22 +91,20 @@ export default Loaisach
 const styles = StyleSheet.create({
 
     imageSP: {
-        width: 80, height: 80,
+        width: 70, height: 70,
         borderRadius:10
     },
 
     itemcategory: {
-        marginVertical: 8,
-        marginHorizontal: 5,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10,
+        padding: 5,
         flexDirection:'row',
         width: '45%',
         backgroundColor:'white',
         borderRadius:15, 
         marginStart:10,
-        marginEnd:10
+        marginEnd:1
    
     },
     columnWrapper: {
