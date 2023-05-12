@@ -4,11 +4,11 @@ import { TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native'
 
 let duLieubook = [
-    { id: 1, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
-    { id: 2, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
-    { id: 3, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
-    { id: 4, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 },
-    { id: 5, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", giamuon: 200 }
+    { id: 1, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng",nxb:"Kim Đồng", giamuon: 200 },
+    { id: 2, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb: "Kim Đồng", giamuon: 200 },
+    { id: 3, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb: "Kim Đồng", giamuon: 200 },
+    { id: 4, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb: "Kim Đồng", giamuon: 200 },
+    { id: 5, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb:"Kim Đồng",giamuon: 200 }
 
 ]
 const ChiTietSach = (props) => {
@@ -44,22 +44,24 @@ const ChiTietSach = (props) => {
                 height: '60%'
             }}>
                 <ScrollView style={{  }} >
-                <View style={{flexDirection: 'row'}}> 
-                        <Image source={require('../assets/img_book.jpg')} style={{ width: 130, height: 170, borderRadius: 10, marginEnd: 10 }} />
-                        <View style={{ flexDirection: 'column', width: '70%' }}>
+                <View style={{flexDirection: 'row', marginTop:10}}> 
+                      <Image source={require('../assets/img_book.jpg')} style={{ width: 130, height: 180, borderRadius: 10, marginEnd: 10 }} />
+                   
+                        <View style={{ width: '70%' }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Sách 18+ 2023</Text>
+                            <Text style={{ fontSize: 20 }}>Nxb: Kim Đồng</Text>
                             <Text style={{ fontSize: 20 }}>Tác giả: Nguyễn Văn Dũng</Text>
                             <Text style={{ fontSize: 18 }}>Loại sách: Tâm Lý</Text>
-                            <Text style={{ flexWrap: 'wrap', fontSize: 15, marginTop: 5 }}>Mô tả: Rất nhiều thứ thú vị 
-                            nằm trong này nhé em húpàafaas kjsgkfwkjfkjhakhfahflalfakjf;à;lsaf;là;kalfkakf'alf;salf;alfsa
-                            kajhdkjsahdkjsahkjhsakjfhakjhfahhfksahj
-                            </Text>
-                            <Text style={{ fontSize: 20, color: 'red' }}>$2000</Text>
-
-
+                          
+                            <Text style={{ fontSize: 18, color: 'red',fontStyle:'italic' }}>Giá Bán: 2000 VNĐ</Text>
+                            <Text style={{ fontSize: 18, color: 'red' ,fontStyle: 'italic' }}>Giá Thuê: 1000 VNĐ</Text>
+                            <Text style={{ fontSize: 18, color: 'black' }}>Số Lượng: 100</Text>
                         </View>
+                      
                 </View>
-                 
+                    <Text style={{ flexWrap: 'wrap', fontSize: 18, marginTop: 5, fontStyle:'normal' }}>Mô tả: Rất nhiều thứ thú vị
+                        nằm trong này nhé em
+                    </Text>
                 </ScrollView>
 
             </View>

@@ -38,7 +38,7 @@ const Sach = (props) => {
       <View style={styles.itemcategory}>
         <TouchableOpacity onPress={() => props.navigation.navigate("Loaisach")}>
           {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
-          <Image source={require('../assets/humor.png')} style={styles.imageSP} />
+          <Image source={require('../assets/truyen-ngon-tinh-18.jpg')} style={styles.imageSP} />
 
         </TouchableOpacity>
         <Text style={{ fontWeight: '400', color: '#333333' }}>{item.name}</Text>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
      height:'100%'
   },
   imageSP: {
-    width: 30, height:30,
+    width: 30, height:30,borderRadius:5
   },
   imageSP2: {
     width: 100, height: 120,
