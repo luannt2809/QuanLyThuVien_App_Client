@@ -14,6 +14,8 @@ import SachHomNayTra from './Components/SachHomNayTra';
 import SachHomNayMuon from './Components/SachHomNayMuon';
 import ItemHoaDon from './Components/ItemHoaDon';
 import DoanhThuThangChiTiet from './Components/DoanhThuThangChiTiet';
+import Loaisach from './Components/Loaisach';
+import TimkiemSach from './Components/TimkiemSach';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -42,6 +44,10 @@ export default function App() {
         <Stack.Screen name='SachHomNayMuon' component={SachHomNayMuon} options={{title:"Phiếu mượn hôm nay"}}/>
         <Stack.Screen name='ItemHoaDon' component={ItemHoaDon}/>
         <Stack.Screen name='DoanhThuThangChiTiet' component={DoanhThuThangChiTiet} options={{title:'Doanh thu theo tháng'}}/>
+        <Stack.Screen name='Loaisach' component={Loaisach} options={{ title: 'Loại Sách' }} />
+        <Stack.Screen name='TkSach' component={TimkiemSach} options={{ title: 'Tim Kiếm' }} />
+
+
       </Stack.Navigator>
     </NavigationContainer>
   );
