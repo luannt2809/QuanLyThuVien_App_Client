@@ -16,16 +16,16 @@ let duLieu = [
 ]
 
 const numColumns = 2;
-const Loaisach = () => {
+const Loaisach = (props) => {
 
     const renderCategory = ({ item }) => {
         return (
          
             <View style={styles.itemcategory}>
               {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
-              <TouchableOpacity>
-                    <View>
-                        <Image source={require('../assets/humor.png')} style={styles.imageSP} />
+                <TouchableOpacity onPress={() => props.navigation.navigate("SachTheLoai")}>
+                    <View style={{marginEnd:10}}> 
+                        <Image source={require('../assets/truyen-ngon-tinh-18.jpg')} style={styles.imageSP} />
                     </View>
               </TouchableOpacity>
              
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
 
     imageSP: {
         width: 80, height: 80,
+        borderRadius:10
     },
 
     itemcategory: {
