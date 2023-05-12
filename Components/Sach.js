@@ -29,14 +29,14 @@ const numColumns = 5;
 const numColumns2 = 2;
 
 
-const Sach = () => {
+const Sach = (props) => {
 
 
   const renderCategory = ({ item }) => {
     return (
-
+      
       <View style={styles.itemcategory}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate("Loaisach")}>
           {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
           <Image source={require('../assets/humor.png')} style={styles.imageSP} />
 
@@ -66,35 +66,44 @@ const Sach = () => {
 
   return (
 
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    >
       <View style={styles.container}>
+      
         <View style={{ backgroundColor: 'white', margin: 5, elevation: 10, borderRadius: 10 }}>
-          <View style={{
-            padding: 7,
-            width: '95%',
-            marginTop: 5,
-            marginBottom: 5,
-            flexDirection: 'row',
-            backgroundColor: '#EEEEEE',
-            alignItems: 'center',
-            borderRadius: 10,
-            marginLeft: 10
-          }}>
-            <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
-            <Text placeholder='Search' style={styles.input}
-            // underlineColorAndroid="transparent"
-            >
-            Search
-            </Text>
-          </View>
-          
-          <View style={{  }}>
-              <FlatList
-                data={duLieu}
-                keyExtractor={item => item.id}
-                renderItem={renderCategory}
-                numColumns={numColumns}
+          <TouchableOpacity onPress={() => props.navigation.navigate("Loaisach")}>
+            <View style={{
+              padding: 7,
+              width: '95%',
+              marginTop: 10,
+              marginBottom: 5,
+              flexDirection: 'row',
+              backgroundColor: '#EEEEEE',
+              alignItems: 'center',
+              borderRadius: 10,
+              marginLeft: 10
+            }}>
+              <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
+              <Text placeholder='Search' style={styles.input}
+              // underlineColorAndroid="transparent"
               >
-              </FlatList>
+                Search
+              </Text>
+            </View>
+
+          </TouchableOpacity>
+         
+          <View style={{}}>
+            <FlatList
+              data={duLieu}
+              keyExtractor={item => item.id}
+              renderItem={renderCategory}
+              showsHorizontalScrollIndicator={false}
+         
+              horizontal
+            >
+            </FlatList>
           </View>
 
 
@@ -102,10 +111,13 @@ const Sach = () => {
         </View>
 
         <View style={{ backgroundColor: 'white', margin: 5, elevation: 10, borderRadius: 10 }}>
+          <TouchableOpacity onPress={() => props.navigation.navigate("TkSach")} >
+
+   
           <View style={{
             padding: 7,
             width: '95%',
-            marginTop: 5,
+            marginTop: 10,
             marginBottom: 5,
             flexDirection: 'row',
             backgroundColor: '#EEEEEE',
@@ -117,25 +129,28 @@ const Sach = () => {
             <Text placeholder='Search' style={styles.input}
             // underlineColorAndroid="transparent"
             >
-            Search
+              Search
             </Text>
           </View>
-          
-          <View style={{height:'70%'  }}>
-              <FlatList
-                data={duLieubook}
-                keyExtractor={item => item.id}
-                renderItem={renderBook}
-                numColumns={numColumns2}
-                horizontal={false}
-              >
+          </TouchableOpacity>
+          <View style={{  }}>
+            <FlatList
+              data={duLieubook}
+              keyExtractor={item => item.id}
+              renderItem={renderBook}
+              numColumns={numColumns2}
+              showsHorizontalScrollIndicator={false}
+              horizontal={false}
+            >
 
-              </FlatList>
+            </FlatList>
           </View>
 
         </View>
 
       </View>
+    </ScrollView>
+      
 
    
   )
