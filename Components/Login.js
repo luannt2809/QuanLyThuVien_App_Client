@@ -23,7 +23,7 @@ const Login = (props) => {
           <TextInput style={styles.boxInput2} placeholder='Password' textContentType='password' secureTextEntry={!showPassword}/>   
           {/* <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//hidepasswd.png')}/> */}
 
-          <TouchableOpacity onPress={toggleShowPassword} style={{justifyContent:'center'}}>
+          <TouchableOpacity onPress={toggleShowPassword} style={{justifyContent:'center',marginTop:6}}>
             <Text>{showPassword ? <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//showpasswd.png')}/> : <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//hidepasswd.png')}/>}</Text>
             
           </TouchableOpacity>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   boxInput1:{
     width:300,
     height:50,
-    fontSize:20,
+    fontSize:16,
     color:'black',
     flexDirection:'row',
     borderWidth:2,
