@@ -12,7 +12,7 @@ const Login = (props) => {
   return (
     <View style={{flex:1,alignItems:'center',backgroundColor:"#fff",paddingTop:180}}>
       <Image style={{width:100,height:100,alignSelf:'center',marginBottom:40}} source={require('../assets//library.png')}/>
-      <Text style={{color:'#584CF4',fontSize:26,fontWeight:'bold',marginBottom:30}}>Thư viện Ngũ Hảo Hán FPoly</Text>
+      <Text style={{color:'#584CF4',fontSize:20,fontWeight:'bold',marginBottom:30}}>Thư viện Ngũ Hảo Hán FPoly</Text>
       <View>
         <View style={styles.boxInput1}>
           <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//user.png')}/>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   boxInput2:{
     width:250,
     height:38,
-    fontSize:20,
+    fontSize:16,
     color:'black',
     borderColor:"#EEEEEE",
     backgroundColor:"#EEEEEE",
