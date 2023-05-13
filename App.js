@@ -18,6 +18,7 @@ import Loaisach from './Components/Loaisach';
 import TimkiemSach from './Components/TimkiemSach';
 import ChiTietSach from './Components/ChiTietSach';
 import SachTheoTheLoai from './Components/SachTheoTheLoai';
+import ThemSachMuon from './Components/ThemSachMuon';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -49,9 +50,8 @@ export default function App() {
         <Stack.Screen name='Loaisach' component={Loaisach} options={{ title: 'Loại Sách' }} />
         <Stack.Screen name='TkSach' component={TimkiemSach} options={{ title: 'Tim Kiếm' }} />
         <Stack.Screen name='ChiTietSach' component={ChiTietSach} options={{ title: 'Chi Tiết Sách' }} />
-
         <Stack.Screen name='SachTheLoai' component={SachTheoTheLoai} options={{ title: 'Sách Theo Thể Loại' }} />
-
+        <Stack.Screen name='ThemSachMuon' component={ThemSachMuon} options={{title:'Thêm sách mượn'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
