@@ -1,8 +1,6 @@
-import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { FlatList, Image, SectionList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { EvilIcons } from '@expo/vector-icons';
-import { ScrollView } from 'react-native';
-import { ScrollViewComponent } from 'react-native';
 
 let duLieu = [
   { id: 1, name: 'Hài Hước '},
@@ -51,7 +49,7 @@ const Sach = (props) => {
     return (
 
       <View style={styles.itembook}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate("ChiTietSach")}>
           {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
           <Image source={require('../assets/img_book.jpg')} style={styles.imageSP2} />
 
@@ -65,10 +63,6 @@ const Sach = (props) => {
 
 
   return (
-
-    <ScrollView
-    showsVerticalScrollIndicator={false}
-    >
       <View style={styles.container}>
       
         <View style={{ backgroundColor: 'white', margin: 5, elevation: 10, borderRadius: 10 }}>
@@ -100,7 +94,7 @@ const Sach = (props) => {
               keyExtractor={item => item.id}
               renderItem={renderCategory}
               showsHorizontalScrollIndicator={false}
-         
+               
               horizontal
             >
             </FlatList>
@@ -133,23 +127,24 @@ const Sach = (props) => {
             </Text>
           </View>
           </TouchableOpacity>
-          <View style={{  }}>
-            <FlatList
-              data={duLieubook}
-              keyExtractor={item => item.id}
-              renderItem={renderBook}
-              numColumns={numColumns2}
-              showsHorizontalScrollIndicator={false}
-              horizontal={false}
-            >
 
-            </FlatList>
-          </View>
+            <View style={{marginBottom:20}}>
+              <FlatList
+                data={duLieubook}
+                keyExtractor={item => item.id}
+                renderItem={renderBook}
+                numColumns={numColumns2}
+                showsHorizontalScrollIndicator={false}
+                horizontal={false}
+              >
+
+              </FlatList>
+            </View>
 
         </View>
 
       </View>
-    </ScrollView>
+
       
 
    
