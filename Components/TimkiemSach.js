@@ -19,7 +19,7 @@ const TimkiemSach = (props) => {
         return (
 
             <View style={styles.itembook}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate("ChiTietSach")}>
                     {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
                     <Image source={require('../assets/img_book.jpg')} style={styles.imageSP2} />
 
@@ -27,9 +27,6 @@ const TimkiemSach = (props) => {
                 <Text style={{ fontWeight: 'bold', color: '#333333', fontSize: 18 }}>{item.tensach}</Text>
                 <Text style={{ fontWeight: '300', color: '#333333' }}>{item.tacgia}</Text>
                 <Text style={{ fontWeight: '600', color: 'red' }}>$ {item.giamuon}</Text>
-                <TouchableOpacity onPress={() => props.navigation.navigate("ChiTietSach")}>
-                    <Text style={{textAlign:"left", alignItems:'flex-start', fontStyle:'italic', textDecorationLine:'underline'}}>Chi Tiết</Text>
-                </TouchableOpacity>
             </View>
         )
     }
