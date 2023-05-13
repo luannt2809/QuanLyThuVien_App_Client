@@ -1,13 +1,16 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import color from "./color";
 
 const TrangChu = (props) => {
   const currentDate = new Date();
-  const day = currentDate.getDay();
+  const day = currentDate.getDate();
   const month = currentDate.getMonth() + 1;
   const year = currentDate.getFullYear();
   const getDate = day + "/" + month + "/" + year;
+  useEffect(()=>{
+    console.log(year);
+  },[])
 
   return (
     <View style={{flex:1}}>

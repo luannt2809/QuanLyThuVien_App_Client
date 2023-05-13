@@ -23,6 +23,14 @@ const BottomNavigation = () => {
       tabBarActiveTintColor: color.xanh,
       tabBarInactiveTintColor: color.xanh,
       tabBarShowLabel: false,
+        headerStyle:{
+          backgroundColor:color.xanh
+
+        },
+        headerTitleStyle:{
+          color:'white'
+        },
+        headerTintColor:'white',
   
       
       tabBarIcon: ({ focused }) => {
@@ -49,8 +57,8 @@ const BottomNavigation = () => {
     
     >
       <Tab.Screen name='TrangChu' component={TrangChu} options={{headerShown:false}}/>
-      <Tab.Screen name='Sach' component={Sach}/>
-      <Tab.Screen name='DonMuon' component={DonMuon}/>
+      <Tab.Screen name='Sach' component={Sach} options={{headerTitle:"Sách"}}/>
+      <Tab.Screen name='DonMuon' component={DonMuon} options={{headerTitle:"Tạo phiếu mượn"}}/>
       <Tab.Screen name='Khac' component={Khac}/>
     </Tab.Navigator>
   )
