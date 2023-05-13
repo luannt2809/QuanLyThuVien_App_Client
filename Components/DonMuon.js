@@ -15,7 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import ItemSachPhieuMuon from "./ItemSachPhieuMuon";
 import { Appearance } from 'react-native';
-const DonMuon = () => {
+const DonMuon = (props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [datePay, setDatePay] = useState(null);
   const [dateRent, setDateRent] = useState(null);
@@ -114,7 +114,7 @@ const DonMuon = () => {
         return;
       }
     }
-  });
+  },[]);
   const isDarkModeEnabled = () => {
     const colorScheme = Appearance.getColorScheme();
     return colorScheme === 'dark';
@@ -140,7 +140,9 @@ const DonMuon = () => {
           <Text style={{ color: color.xanh, fontWeight: "bold",flex:1}}>
             Sách mượn
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={()=>props.navigation.navigate("ThemSachMuon")}
+          >
             <Text>Thêm sách mượn</Text>
           </TouchableOpacity>
         </View>
@@ -180,9 +182,14 @@ const DonMuon = () => {
           backgroundColor: "white",
           padding: 10,
           borderRadius: 10,
+          justifyContent:'center',
+          alignItems:'center'
         }}
       >
-        <View style={{ flexDirection: "row" }}>
+        <View style={{alignItems:'flex-start',justifyContent:'flex-start' ,width:350}}>
+
+        
+        <View style={{ flexDirection: "row"}}>
           <Image
             source={require("../Image/user.png")}
             style={{ width: 15, height: 15, marginRight: 10 }}
@@ -191,15 +198,16 @@ const DonMuon = () => {
             Thông tin người mượn
           </Text>
         </View>
+        </View>
         <View
           style={{
             borderWidth: 1,
             borderColor: "gray",
-            marginLeft: 25,
             marginTop: 10,
             padding: 5,
             borderRadius: 5,
             marginRight: 5,
+            width:320
           }}
         >
           <TextInput placeholder="Nhập họ tên" />
@@ -208,24 +216,23 @@ const DonMuon = () => {
           style={{
             borderWidth: 1,
             borderColor: "gray",
-            marginLeft: 25,
             marginTop: 10,
             padding: 5,
             borderRadius: 5,
             marginRight: 5,
+            width:320
           }}
         >
           <TextInput placeholder="Nhập số điện thoại" />
         </View>
         {anhMatTruoc ? (
-          <TouchableOpacity onPress={pickImageTruoc}>
+          <TouchableOpacity onPress={pickImageTruoc} >
             <Image
               onPress={() => console.log("Long")}
               source={{ uri: anhMatTruoc }}
               style={{
                 width: 321.06,
                 height: 204.52,
-                marginLeft: 25,
                 marginTop: 10,
               }}
             />
@@ -237,7 +244,6 @@ const DonMuon = () => {
               height: 204.52,
               borderWidth: 1,
               borderColor: "gray",
-              marginLeft: 25,
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
@@ -261,7 +267,6 @@ const DonMuon = () => {
               style={{
                 width: 321.06,
                 height: 204.52,
-                marginLeft: 25,
                 marginTop: 10,
               }}
             />
@@ -273,7 +278,6 @@ const DonMuon = () => {
               height: 204.52,
               borderWidth: 1,
               borderColor: "gray",
-              marginLeft: 25,
               marginTop: 10,
               justifyContent: "center",
               alignItems: "center",
