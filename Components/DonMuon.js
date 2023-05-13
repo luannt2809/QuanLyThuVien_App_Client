@@ -14,6 +14,7 @@ import color from "./color";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import ItemSachPhieuMuon from "./ItemSachPhieuMuon";
+import { Appearance } from 'react-native';
 const DonMuon = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [datePay, setDatePay] = useState(null);
@@ -114,6 +115,10 @@ const DonMuon = () => {
       }
     }
   });
+  const isDarkModeEnabled = () => {
+    const colorScheme = Appearance.getColorScheme();
+    return colorScheme === 'dark';
+  }
   return (
     <ScrollView
       style={{ padding: 10, flex: 1 }}
@@ -345,6 +350,9 @@ const DonMuon = () => {
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
+          textColor={isDarkModeEnabled() ? 'white' : 'black'}
+          backgroundColor={isDarkModeEnabled() ? 'black' : 'white'}
+          datePickerContainerStyleIOS={{backgroundColor: isDarkModeEnabled() ? 'black' : 'white'}}
         />
       </View>
     </ScrollView>

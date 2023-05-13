@@ -16,11 +16,11 @@ const Login = (props) => {
       <View>
         <View style={styles.boxInput1}>
           <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//user.png')}/>
-          <TextInput style={styles.boxInput2}  placeholder='Username' textContentType={'username'}/>
+          <TextInput style={styles.boxInput2}  placeholder='Tên đăng nhập' textContentType={'username'}/>
         </View>
         <View style={styles.boxInput1}>
           <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//passwd.png')}/>
-          <TextInput style={styles.boxInput2} placeholder='Password' textContentType='password' secureTextEntry={!showPassword}/>   
+          <TextInput style={styles.boxInput2} placeholder='Mật khẩu' textContentType='password' secureTextEntry={!showPassword}/>   
           {/* <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//hidepasswd.png')}/> */}
 
           <TouchableOpacity onPress={toggleShowPassword} style={{justifyContent:'center',marginTop:6}}>
