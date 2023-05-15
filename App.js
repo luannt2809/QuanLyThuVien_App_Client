@@ -19,6 +19,7 @@ import TimkiemSach from './Components/TimkiemSach';
 import ChiTietSach from './Components/ChiTietSach';
 import SachTheoTheLoai from './Components/SachTheoTheLoai';
 import ThemSachMuon from './Components/ThemSachMuon';
+import Profile from './Components/Profile';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -52,6 +53,7 @@ export default function App() {
         <Stack.Screen name='ChiTietSach' component={ChiTietSach} options={{ title: 'Chi Tiết Sách' }} />
         <Stack.Screen name='SachTheLoai' component={SachTheoTheLoai} options={{ title: 'Sách Theo Thể Loại' }} />
         <Stack.Screen name='ThemSachMuon' component={ThemSachMuon} options={{title:'Thêm sách mượn'}}/>
+        <Stack.Screen name='Profile' component={Profile} options={{ title: 'Profile' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
