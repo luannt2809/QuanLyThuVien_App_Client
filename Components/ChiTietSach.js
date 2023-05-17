@@ -6,7 +6,7 @@ import { ScrollView } from 'react-native'
 const ChiTietSach = ({route, navigation}) => {
 
     var url_chitiet = 'http://192.168.1.11:3000/api/book/' + route.params.id;
-      var url_book = 'http://192.168.1.11:3000/api/books';
+    var url_book = 'http://192.168.1.11:3000/api/books';
 
     const [ListchitietSach, setListchitietSach] = useState(null)
     const [Listbook, setListbook] = useState([])
@@ -133,7 +133,7 @@ const ChiTietSach = ({route, navigation}) => {
                 }}>
                     <FlatList
                         data={Listbook}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item._id}
                         renderItem={renderBook}
                         horizontal
                         showsHorizontalScrollIndicator={false}
