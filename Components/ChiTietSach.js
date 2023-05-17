@@ -1,35 +1,85 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { FlatList, Image, RefreshControl, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native'
 
-let duLieubook = [
-    { id: 1, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng",nxb:"Kim Đồng", giamuon: 200 },
-    { id: 2, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb: "Kim Đồng", giamuon: 200 },
-    { id: 3, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb: "Kim Đồng", giamuon: 200 },
-    { id: 4, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb: "Kim Đồng", giamuon: 200 },
-    { id: 5, tensach: 'Sách 18+ 2023 ', tacgia: "Dũng", nxb:"Kim Đồng",giamuon: 200 }
+const ChiTietSach = ({route, navigation}) => {
 
-]
-const ChiTietSach = (props) => {
+    var url_chitiet = 'http://192.168.1.11:3000/api/book/' + route.params.id;
+      var url_book = 'http://192.168.1.11:3000/api/books';
+
+    const [ListchitietSach, setListchitietSach] = useState(null)
+    const [Listbook, setListbook] = useState([])
+    const [reloading, setreloading] = useState(false)
+    const [isLoading, setisLoading] = useState(true)
 
     const renderBook = ({ item }) => {
         return (
 
             <View style={styles.itembook}>
-                <TouchableOpacity onPress={() => props.navigation.navigate("ChiTietSach")}>
-                    {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
-                    <Image source={require('../assets/img_book.jpg')} style={styles.imageSP2} />
+                <TouchableOpacity onPress={() => navigation.navigate("ChiTietSach", {id:item._id})}>
+                    <Image source={{ uri: item.image ? item.image : null }} style={styles.imageSP2} />
 
                 </TouchableOpacity>
-                <Text style={{ fontWeight: 'bold', color: '#333333', fontSize: 18 }}>{item.tensach}</Text>
-                <Text style={{ fontWeight: '300', color: '#333333' }}>{item.tacgia}</Text>
-                <Text style={{ fontWeight: '600', color: 'red' }}>$ {item.giamuon}</Text>
+                <Text style={{ fontWeight: 'bold', color: '#333333', fontSize: 18 }}>{item.name}</Text>
+                <Text style={{ fontWeight: '300', color: '#333333' }}>{item.author}</Text>
+                <Text style={{ fontWeight: '600', color: 'red' }}>$ {item.priceRent}</Text>
             </View>
         )
     }
 
+    const getData = async () => {
 
+        try {
+            const response = await fetch(url_chitiet); //lấy dữ liệu về 
+            const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
+            console.log(jsonSP);
+            setListchitietSach(jsonSP.data);
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setisLoading(false);
+        }
+    }
+
+    const getDataBook = async () => {
+
+        try {
+            const response = await fetch(url_book); //lấy dữ liệu về 
+            const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
+           // console.log(jsonSP);
+            setListbook(jsonSP.data);
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setisLoading(false);
+        }
+    }
+
+    const realoadData = React.useCallback(() => {
+        setreloading(true); ///set trang thai 
+        getData();
+        getDataBook();
+        //moo phong doi reload, neesu laf reload tu sever that thi khong can );
+        setTimeout(() => {
+            setreloading(false);
+        }, 2000);
+    })
+
+    React.useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            // do something
+            getData();
+            getDataBook();
+
+        });
+
+        return unsubscribe;
+    }, [navigation.navigation]);
+   
+    
     return (
         <View style={{ flex: 1 }}>
 
@@ -41,24 +91,27 @@ const ChiTietSach = (props) => {
                 height: '60%'
             }}>
                 <ScrollView style={{  }} >
-                <View style={{flexDirection: 'row', marginTop:10}}> 
-                      <Image source={require('../assets/img_book.jpg')} style={{ width: 130, height: 180, borderRadius: 10, marginEnd: 10 }} />
-                   
-                        <View style={{ width: '70%' }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Sách 18+ 2023</Text>
-                            <Text style={{ fontSize: 20 }}>Nxb: Kim Đồng</Text>
-                            <Text style={{ fontSize: 20 }}>Tác giả: Nguyễn Văn Dũng</Text>
-                            <Text style={{ fontSize: 18 }}>Loại sách: Tâm Lý</Text>
-                          
-                            <Text style={{ fontSize: 18, color: 'red',fontStyle:'italic' }}>Giá Bán: 2000 VNĐ</Text>
-                            <Text style={{ fontSize: 18, color: 'red' ,fontStyle: 'italic' }}>Giá Thuê: 1000 VNĐ</Text>
-                            <Text style={{ fontSize: 18, color: 'black' }}>Số Lượng: 100</Text>
+
+
+                <View>
+                        <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                            {ListchitietSach && <Image source={{ uri: ListchitietSach.image ? ListchitietSach.image : null }} style={{ width: 130, height: 180, borderRadius: 10, marginEnd: 10 }} />}  
+
+                            <View style={{ width: '70%' }}>
+                                {ListchitietSach && <Text style={{ fontWeight: 'bold', fontSize: 25 }}>{ListchitietSach.name}</Text>} 
+                                {ListchitietSach && <Text style={{ fontSize: 20 }}>Nxb: {ListchitietSach.nxb}</Text> } 
+                                {ListchitietSach && <Text style={{ fontSize: 20 }}>Tác giả: {ListchitietSach.author}</Text> }
+                                {ListchitietSach && <Text style={{ fontSize: 18 }}>Loại sách: {ListchitietSach.cateId.name} </Text>} 
+
+                                {ListchitietSach && <Text style={{ fontSize: 18, color: 'red', fontStyle: 'italic' }}>Giá Bán: {ListchitietSach.priceBook} VNĐ</Text> } 
+                                {ListchitietSach && <Text style={{ fontSize: 18, color: 'red', fontStyle: 'italic' }}>Giá Thuê: {ListchitietSach.priceRent} VNĐ</Text>}
+                                {ListchitietSach && <Text style={{ fontSize: 18, color: 'black' }}>Số Lượng: {ListchitietSach.quantity}</Text>} 
+                            </View>
+
                         </View>
-                      
+                        {ListchitietSach && <Text style={{ flexWrap: 'wrap', fontSize: 18, marginTop: 5, fontStyle: 'normal' }}>Mô tả: {ListchitietSach.desc}
+                        </Text>} 
                 </View>
-                    <Text style={{ flexWrap: 'wrap', fontSize: 18, marginTop: 5, fontStyle:'normal' }}>Mô tả: Rất nhiều thứ thú vị
-                        nằm trong này nhé em
-                    </Text>
                 </ScrollView>
 
             </View>
@@ -79,11 +132,14 @@ const ChiTietSach = (props) => {
                     backgroundColor: 'white', borderRadius: 20, padding: 10, margin: 10, elevation: 5,
                 }}>
                     <FlatList
-                        data={duLieubook}
+                        data={Listbook}
                         keyExtractor={item => item.id}
                         renderItem={renderBook}
                         horizontal
                         showsHorizontalScrollIndicator={false}
+                        refreshControl={
+                            <RefreshControl refreshing={reloading} onRefresh={realoadData} />
+                        }
                     >
                     </FlatList>
 

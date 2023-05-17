@@ -1,25 +1,17 @@
-import { FlatList, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 
 
-let duLieu = [
-    { id: 1, name: 'Hài Hước ', vitri:"Kệ 4A" },
-    { id: 2, name: 'Kinh Dị ', vitri: "Kệ 4A" },
-    { id: 3, name: 'Tình Yêu ', vitri: "Kệ 4A" },
-    { id: 4, name: 'Hài Hước ', vitri: "Kệ 4A" },
-    { id: 5, name: 'Hài Hước ', vitri: "Kệ 4A" },
-    { id: 6, name: 'Hài Hước ', vitri: "4A" },
-    { id: 7, name: 'Hài Hước ', vitri: "4A" },
-    { id: 8, name: 'Kinh Dị ', vitri: "4A" },
-    { id: 9, name: 'Tình Yêu ', vitri: "4A" },
-    { id: 10, name: 'Hài Hước ', vitri: "4A" },
-    { id: 11, name: 'Kinh Dị ', vitri: "4A" },
-    { id: 12, name: 'Tình Yêu ', vitri: "4A" },
-]
-
 const numColumns = 2;
 const Loaisach = (props) => {
+
+    var url = 'http://192.168.1.17:3000/api/categorys';
+    const [Listcategory, setListcategory] = useState([])
+    const [reloading, setreloading] = useState(false)
+    const [img_base64, setiimg_base64] = useState(null)
+    const [isLoading, setisLoading] = useState(true)
+
 
     const renderCategory = ({ item }) => {
         return (
@@ -28,16 +20,16 @@ const Loaisach = (props) => {
               {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
                 <TouchableOpacity onPress={() => props.navigation.navigate("SachTheLoai")}>
                     <View style={{marginEnd:10}}> 
-                        <Image source={require('../assets/truyen-ngon-tinh-18.jpg')} style={styles.imageSP} />
+                        <Image source={{ uri: item.image ? item.image : null }} style={styles.imageSP} />
                     </View>
               </TouchableOpacity>
              
                   
                 <View style={{flexDirection:'column'}}>
-                    <Text style={{ fontWeight: 'bold', color: '#333333',fontSize:18}}>{item.name}</Text>
-                    <View style={{flexDirection:'row'}}>
+                    <Text style={{ fontWeight: 'bold', color: '#333333',fontSize:15}}>{item.name}</Text>
+                    <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                         <EvilIcons name="location" size={24} color="#584CF4" />
-                        <Text style={{ fontWeight: '500', color: '#584CF4' }}>{item.vitri}</Text>
+                        <Text style={{ fontWeight: '500', color: '#584CF4', textAlign:'center', }}>Kệ 1</Text>
                        
                     </View>
                   
@@ -48,7 +40,40 @@ const Loaisach = (props) => {
         )
     }
 
-  
+    const getData = async () => {
+
+        try {
+            const response = await fetch(url); //lấy dữ liệu về 
+            const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
+            console.log(jsonSP);
+            setListcategory(jsonSP.data);
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setisLoading(false);
+        }
+    }
+
+    const realoadData = React.useCallback(() => {
+        setreloading(true); ///set trang thai 
+        getData();
+        //moo phong doi reload, neesu laf reload tu sever that thi khong can );
+        setTimeout(() => {
+            setreloading(false);
+        }, 2000);
+    })
+
+    React.useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            // do something
+            getData();
+      
+        });
+
+        return unsubscribe;
+    }, [props.navigation]);
+
   return (
     <View>
       
@@ -70,14 +95,17 @@ const Loaisach = (props) => {
                   </TextInput>
               </View>
 
-              <View style={{height:'90%', paddingEnd:20}}>
+              <View style={{height:'90%', paddingEnd:20, backgroundColor:'white'}}>
                   <FlatList
-                      data={duLieu}
-                      keyExtractor={item => item.id}
+                      data={Listcategory}
+                      keyExtractor={item => item._id}
                       renderItem={renderCategory}
                       showsHorizontalScrollIndicator={false}
                       numColumns={numColumns}
-                      columnWrapperStyle={styles.columnWrapper}
+                   
+                  refreshControl={
+                      <RefreshControl refreshing={reloading} onRefresh={realoadData} />
+                  }
                   />
 
               </View>
@@ -96,17 +124,16 @@ const styles = StyleSheet.create({
     },
 
     itemcategory: {
+        width: '50%',
+        margin: 10,
+        marginEnd: 1,
+        borderRadius: 40,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 5,
-        flexDirection:'row',
-        width: '45%',
-        backgroundColor:'white',
-        borderRadius:15, 
-        marginStart:10,
-        marginEnd:1
-   
     },
+
+
     columnWrapper: {
         flex: 1,
         flexDirection: 'row',
