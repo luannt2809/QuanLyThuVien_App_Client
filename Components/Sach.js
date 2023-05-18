@@ -1,13 +1,12 @@
 import { FlatList, Image, RefreshControl, SectionList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
-
+import API from '../API__/api'
 const numColumns2 = 2;
 
 
 const Sach = (props) => {
-  var url='http://192.168.1.11:3000/api/categorys';
-  var url_book ='http://192.168.1.11:3000/api/books';
+ 
 
   const [reloading, setreloading] =useState(false)
   const [Listcategory, setListcategory] = useState([])
@@ -36,7 +35,7 @@ const Sach = (props) => {
     return (
 
       <View style={styles.itembook}>
-        <TouchableOpacity onPress={() => props.navigation.navigate("ChiTietSach")}>
+        <TouchableOpacity onPress={() => props.navigation.navigate("ChiTietSach", {id:item._id})}>
           {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
           <Image source={{ uri: item.image ? item.image : null }} style={styles.imageSP2} />
 
@@ -51,7 +50,7 @@ const Sach = (props) => {
   const getData = async () => {
 
     try {
-      const response = await fetch(url); //lấy dữ liệu về 
+      const response = await fetch(API.categorys); //lấy dữ liệu về 
       const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
       console.log(jsonSP);
       setListcategory(jsonSP.data);
@@ -66,7 +65,7 @@ const Sach = (props) => {
   const getDataBooks = async () => {
 
     try {
-      const response = await fetch(url_book); //lấy dữ liệu về 
+      const response = await fetch(API.books); //lấy dữ liệu về 
       const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
       console.log(jsonSP);
       setListbooks(jsonSP.data);

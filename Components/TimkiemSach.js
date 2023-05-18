@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native';
 import { Image } from 'react-native';
+import API from '../API__/api'
+
 const numColumns = 2;
 
 const TimkiemSach = (props) => {
-    var url_book = 'http://192.168.1.11:3000/api/books';
 
     const [reloading, setreloading] = useState(false)
     const [Listbooks, setListbooks] = useState([])
@@ -32,7 +33,7 @@ const TimkiemSach = (props) => {
     const getDataBooks = async () => {
 
         try {
-            const response = await fetch(url_book); //lấy dữ liệu về 
+            const response = await fetch(API.books); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
             console.log(jsonSP);
             setListbooks(jsonSP.data);

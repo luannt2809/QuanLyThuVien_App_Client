@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import color from "./color";
 
-const Profile = () => {
+const Profile = (props) => {
     return (
         <View>
             <View style={{ backgroundColor: color.xanhNhat, height: '42%', width: '100%', borderBottomLeftRadius: 40, borderBottomRightRadius: 40, elevation: 10 }}>
@@ -47,8 +47,10 @@ const Profile = () => {
                 <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'black', margin: '5%' }} />
                 <Text style={{color:color.xanh, fontWeight:'bold', textAlign:'center', fontSize:19}}>Group 9</Text>
             </View>
-            <TouchableOpacity style={{alignSelf:'center', backgroundColor:color.xanh, margin:20, width:150,alignItems:'center',padding:10, borderRadius:20 }}>
-                <Text style={{color:'white', fontWeight:'bold'}}>Xác Nhận</Text>
+            <TouchableOpacity style={{alignSelf:'center', backgroundColor:color.xanh, margin:20, width:150,alignItems:'center',padding:10, borderRadius:20 }}
+                onPress={() => { props.navigation.navigate('Changepasswd')}}
+            >
+                <Text style={{color:'white', fontWeight:'bold'}}>Đổi Mật Khẩu</Text>
             </TouchableOpacity>
         </View>
     )
