@@ -1,6 +1,8 @@
 import { FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
+import API from '../API__/api'
+
 
 
 const numColumns = 2;
@@ -43,7 +45,7 @@ const Loaisach = (props) => {
     const getData = async () => {
 
         try {
-            const response = await fetch(url); //lấy dữ liệu về 
+            const response = await fetch(API.categorys); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
             console.log(jsonSP);
             setListcategory(jsonSP.data);
