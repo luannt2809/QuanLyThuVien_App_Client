@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import TrangChu from './TrangChu';
-import TimKiem from './Sach';
+import TimKiem from './Books/Sach';
 import DonMuon from './DonMuon';
 import Khac from './Khac';
 import color from './color';
@@ -11,7 +11,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import Sach from './Sach';
+import Sach from './Books/Sach';
 
 
 

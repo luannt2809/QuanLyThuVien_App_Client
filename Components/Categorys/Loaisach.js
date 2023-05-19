@@ -1,18 +1,17 @@
 import { FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
-import API from '../API__/api'
+import API, { API_URL } from '../../API__/api'
 
 
 
 const numColumns = 2;
 const Loaisach = (props) => {
-
-    var url = 'http://192.168.1.17:3000/api/categorys';
     const [Listcategory, setListcategory] = useState([])
     const [reloading, setreloading] = useState(false)
     const [img_base64, setiimg_base64] = useState(null)
     const [isLoading, setisLoading] = useState(true)
+    const [searchcategory, setsearchcategory] = useState()
 
 
     const renderCategory = ({ item }) => {
@@ -20,7 +19,7 @@ const Loaisach = (props) => {
          
             <View style={styles.itemcategory}>
               {/* <Image source={{ uri: url ? url : null }} style={styles.imageSP} /> */}
-                <TouchableOpacity onPress={() => props.navigation.navigate("SachTheLoai")}>
+                <TouchableOpacity onPress={() => props.navigation.navigate("SachTheLoai", {id:item._id, image:item.image, name:item.name})}>
                     <View style={{marginEnd:10}}> 
                         <Image source={{ uri: item.image ? item.image : null }} style={styles.imageSP} />
                     </View>
@@ -45,7 +44,7 @@ const Loaisach = (props) => {
     const getData = async () => {
 
         try {
-            const response = await fetch(API.categorys); //lấy dữ liệu về 
+            const response = await fetch(API_URL+'categorys'); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
             console.log(jsonSP);
             setListcategory(jsonSP.data);
@@ -54,6 +53,19 @@ const Loaisach = (props) => {
             console.error(error);
         } finally {
             setisLoading(false);
+        }
+    }
+
+    const search=async()=>{
+        try {
+            const response = await fetch(API_URL + 'categorys/search?name=' + searchcategory); //lấy dữ liệu về 
+            const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
+            console.log(jsonSP);
+            setListcategory(jsonSP.data);
+
+        } catch (error) {
+            console.error(error);
+        } finally {
         }
     }
 
@@ -90,7 +102,10 @@ const Loaisach = (props) => {
                   borderRadius: 10,
                   marginLeft: 10
               }}>
+              <TouchableOpacity onPress={search}>
                   <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
+              </TouchableOpacity>
+                
                   <TextInput placeholder='Search' style={styles.input}
                   // underlineColorAndroid="transparent"
                   >

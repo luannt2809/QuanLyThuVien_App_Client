@@ -2,12 +2,12 @@ import { FlatList, Image, RefreshControl, StyleSheet, Text, View } from 'react-n
 import React, { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { ScrollView } from 'react-native'
-import API from '../API__/api'
+import API, { API_URL } from '../../API__/api'
 
 
 const ChiTietSach = ({route, navigation}) => {
 
-    var url_chitiet = API.chitietbook + route.params.id;
+    var url_chitiet = API_URL +'book/'+ route.params.id;
     
 
     const [ListchitietSach, setListchitietSach] = useState(null)
@@ -48,7 +48,7 @@ const ChiTietSach = ({route, navigation}) => {
     const getDataBook = async () => {
 
         try {
-            const response = await fetch(API.books); //lấy dữ liệu về 
+            const response = await fetch(API_URL+'books'); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
            // console.log(jsonSP);
             setListbook(jsonSP.data);

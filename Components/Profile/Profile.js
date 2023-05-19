@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import color from "./color";
+import color from "../color";
 
 const Profile = (props) => {
     return (
