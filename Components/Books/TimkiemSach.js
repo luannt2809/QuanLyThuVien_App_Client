@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native';
 import { Image } from 'react-native';
-import API from '../API__/api'
+import API, { API_URL } from '../../API__/api'
 
 const numColumns = 2;
 
@@ -13,6 +13,7 @@ const TimkiemSach = (props) => {
     const [Listbooks, setListbooks] = useState([])
     const [img_base64, setiimg_base64] = useState(null)
     const [isLoading, setisLoading] = useState(true)
+    const [searchname, setsearchname] = useState()
 
     const renderBook = ({ item }) => {
         return (
@@ -33,7 +34,20 @@ const TimkiemSach = (props) => {
     const getDataBooks = async () => {
 
         try {
-            const response = await fetch(API.books); //lấy dữ liệu về 
+            const response = await fetch(API_URL+'books'); //lấy dữ liệu về 
+            const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
+            console.log(jsonSP);
+            setListbooks(jsonSP.data);
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+        }
+    }
+
+    const search= async()=>{
+        try {
+            const response = await fetch(API_URL+'books/search?name='+searchname); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
             console.log(jsonSP);
             setListbooks(jsonSP.data);
@@ -75,9 +89,12 @@ const TimkiemSach = (props) => {
               borderRadius: 10,
               marginLeft: 10
           }}>
-              <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
+              <TouchableOpacity onPress={search}>
+                  <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }}  />
+              </TouchableOpacity>
               <TextInput placeholder='Search' style={styles.input}
-              // underlineColorAndroid="transparent"
+              // underlineColorAndroid="transparent" 
+              onChangeText={(text)=>{setsearchname(text)}}
               >
               </TextInput>
           </View>

@@ -14,13 +14,14 @@ import SachHomNayTra from './Components/SachHomNayTra';
 import SachHomNayMuon from './Components/SachHomNayMuon';
 import ItemHoaDon from './Components/ItemHoaDon';
 import DoanhThuThangChiTiet from './Components/DoanhThuThangChiTiet';
-import Loaisach from './Components/Loaisach';
-import TimkiemSach from './Components/TimkiemSach';
-import ChiTietSach from './Components/ChiTietSach';
-import SachTheoTheLoai from './Components/SachTheoTheLoai';
+import Loaisach from './Components/Categorys/Loaisach';
+import TimkiemSach from './Components/Books/TimkiemSach';
+import ChiTietSach from './Components/Books/ChiTietSach';
+
 import ThemSachMuon from './Components/ThemSachMuon';
-import Profile from './Components/Profile';
-import ChangePassword from './Components/ChangePassword';
+import Profile from './Components/Profile/Profile';
+import ChangePassword from './Components/Profile/ChangePassword';
+import SachTheoTheLoai from './Components/Books/SachTheoTheLoai';
 
 export default function App() {
   const Stack = createNativeStackNavigator();

@@ -4,6 +4,8 @@ import color from './color'
 import ItemThemSachMuon from './ItemThemSachMuon'
 
 const ThemSachMuon = () => {
+
+
   return (
     <View style={{flex:1}}>
       <View style={{flexDirection:'row',padding:10}}>

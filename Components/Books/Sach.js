@@ -1,7 +1,7 @@
 import { FlatList, Image, RefreshControl, SectionList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
-import API from '../API__/api'
+import API, { API_URL } from '../../API__/api'
 const numColumns2 = 2;
 
 
@@ -50,7 +50,7 @@ const Sach = (props) => {
   const getData = async () => {
 
     try {
-      const response = await fetch(API.categorys); //lấy dữ liệu về 
+      const response = await fetch(API_URL+'categorys'); //lấy dữ liệu về 
       const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
       console.log(jsonSP);
       setListcategory(jsonSP.data);
@@ -65,7 +65,7 @@ const Sach = (props) => {
   const getDataBooks = async () => {
 
     try {
-      const response = await fetch(API.books); //lấy dữ liệu về 
+      const response = await fetch(API_URL+'books'); //lấy dữ liệu về 
       const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
       console.log(jsonSP);
       setListbooks(jsonSP.data);
