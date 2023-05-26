@@ -56,6 +56,20 @@ const SachTheoTheLoai = ({navigation, route}) => {
     }, 2000);
   })
 
+  const searchbook = async()=>{
+    try {
+      const response = await fetch(API_URL + 'books/search?name=' + search); //lấy dữ liệu về 
+      const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
+      console.log(jsonSP);
+      setListbookcate(jsonSP.data);
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setreloading(false)
+    }
+  }
+
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       // do something
@@ -84,9 +98,10 @@ const SachTheoTheLoai = ({navigation, route}) => {
         borderRadius: 10,
         marginLeft: 10
       }}>
-        <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
-        <TextInput placeholder='Search' style={styles.input}
+        <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }}  onPress={searchbook}/>
+        <TextInput placeholder='Search' style={{ width: '90%' }}
         // underlineColorAndroid="transparent"
+        onChangeText={(text)=>{setsearch(text)}}
         >
         </TextInput>
       </View>

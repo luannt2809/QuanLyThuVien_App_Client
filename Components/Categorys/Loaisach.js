@@ -56,7 +56,7 @@ const Loaisach = (props) => {
         }
     }
 
-    const search=async()=>{
+    const search =async()=>{
         try {
             const response = await fetch(API_URL + 'categorys/search?name=' + searchcategory); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
@@ -106,8 +106,9 @@ const Loaisach = (props) => {
                   <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
               </TouchableOpacity>
                 
-                  <TextInput placeholder='Search' style={styles.input}
+                  <TextInput placeholder='Search' style={{width:'90%'}}
                   // underlineColorAndroid="transparent"
+                  onChangeText={(text) => { setsearchcategory(text) }}
                   >
                   </TextInput>
               </View>
