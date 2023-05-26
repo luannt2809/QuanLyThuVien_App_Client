@@ -92,7 +92,7 @@ const TimkiemSach = (props) => {
               <TouchableOpacity onPress={search}>
                   <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }}  />
               </TouchableOpacity>
-              <TextInput placeholder='Search' style={styles.input}
+              <TextInput placeholder='Search' style={{ width: '90%' }}
               // underlineColorAndroid="transparent" 
               onChangeText={(text)=>{setsearchname(text)}}
               >
