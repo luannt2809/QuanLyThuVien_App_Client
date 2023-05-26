@@ -42,7 +42,7 @@ const DonMuon = (props) => {
     const upateList = listBookMuon.map(
       ({ image, nameBook, priceRent, ...res }) => res
     );
-    let listAnh = [`${anhMatTruoc}`,`${anhMatSau}`];
+    let listAnh = [anhMatTruoc.toString(),anhMatSau.toString()];
     const objBill = {
       "bookId": upateList,
       "accountId": "645cef980a72a983efde2cb9",
