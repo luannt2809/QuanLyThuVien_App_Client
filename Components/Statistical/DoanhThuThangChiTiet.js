@@ -7,8 +7,8 @@ import {
     View,
   } from "react-native";
   import React from "react";
-  import color from "./color";
-  import ItemHoaDon from "./ItemHoaDon";
+  import color from "../color";
+  import ItemHoaDon from "../Bills/ItemHoaDon";
   
   const DoanhThuThangChiTiet = (props) => {
     const list = [1,2,3,4,5]

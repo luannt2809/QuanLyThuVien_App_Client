@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import color from './color'
+import color from '../color'
 import { useNavigation } from '@react-navigation/core'
 
 const ItemHoaDon = (props) => {
@@ -31,7 +31,7 @@ const ItemHoaDon = (props) => {
 
         
         <Image
-        source={require('../Image/tong_tien.png')}
+        source={require('../../Image/tong_tien.png')}
         style={{width:30,height:30}}
         />
         <View>

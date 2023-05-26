@@ -4,24 +4,24 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Welcome from './Components/Welcome';
 import Login from './Components/Login';
-import BottomNavigation from './Components/BottomNavigation';
-import DoanhThuNgayChiTiet from './Components/DoanhThuNgayChiTiet';
+import BottomNavigation from './Components/Navigation/BottomNavigation';
 import color from './Components/color';
-import ChiTietPhieuMuon from './Components/ChiTietPhieuMuon';
-import SachDangMuon from './Components/SachDangMuon';
-import SachQuaHan from './Components/SachQuaHan';
-import SachHomNayTra from './Components/SachHomNayTra';
-import SachHomNayMuon from './Components/SachHomNayMuon';
-import ItemHoaDon from './Components/ItemHoaDon';
-import DoanhThuThangChiTiet from './Components/DoanhThuThangChiTiet';
+import ChiTietPhieuMuon from './Components/Bills/ChiTietPhieuMuon';
+import ItemHoaDon from './Components/Bills/ItemHoaDon';
 import Loaisach from './Components/Categorys/Loaisach';
 import TimkiemSach from './Components/Books/TimkiemSach';
 import ChiTietSach from './Components/Books/ChiTietSach';
 
-import ThemSachMuon from './Components/ThemSachMuon';
+import ThemSachMuon from './Components/Bills/ThemSachMuon';
 import Profile from './Components/Profile/Profile';
 import ChangePassword from './Components/Profile/ChangePassword';
 import SachTheoTheLoai from './Components/Books/SachTheoTheLoai';
+import DoanhThuNgayChiTiet from './Components/Statistical/DoanhThuNgayChiTiet';
+import SachDangMuon from './Components/Statistical/SachDangMuon';
+import SachQuaHan from './Components/Statistical/SachQuaHan';
+import SachHomNayTra from './Components/Statistical/SachHomNayTra';
+import SachHomNayMuon from './Components/Statistical/SachHomNayMuon';
+import DoanhThuThangChiTiet from './Components/Statistical/DoanhThuThangChiTiet';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
