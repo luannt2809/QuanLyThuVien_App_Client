@@ -1,6 +1,8 @@
 import {
   Button,
+  FlatList,
   Image,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -10,23 +12,69 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import color from "./color";
+import color from "../color";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import ItemSachPhieuMuon from "./ItemSachPhieuMuon";
-import { Appearance } from 'react-native';
+import { Appearance } from "react-native";
+import listBookByOrder from "../ListBookByOrder/listBookByOrder";
+import { API_URL } from "../../API__/api";
 const DonMuon = (props) => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [datePay, setDatePay] = useState(null);
   const [dateRent, setDateRent] = useState(null);
   const [fullname, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
   const [anhMatTruoc, setAnhMatTruoc] = useState(null);
   const [anhMatSau, setAnhMatSau] = useState(null);
-
+  const [listBookMuon, setListBookMuon] = useState([]);
+  const [total, setTotal] = useState(0);
   const currentDate = new Date();
   const day = currentDate.getDate();
   const month = currentDate.getMonth() + 1;
   const year = currentDate.getFullYear();
+  const AddBill = () => {
+    if (listBookMuon.length == 0) {
+      alert("Banj chua chon sach");
+      return;
+    }
+    const upateList = listBookMuon.map(
+      ({ image, nameBook, priceRent, ...res }) => res
+    );
+    let listAnh = [`${anhMatTruoc}`,`${anhMatSau}`];
+    const objBill = {
+      "bookId": upateList,
+      "accountId": "645cef980a72a983efde2cb9",
+      "imageCCCD":listAnh,
+      "datePay": datePay,
+      "dateRent": dateRent,
+      "fullname": fullname,
+      "phone": phone,
+      "status": 0,
+      "totalPrice": total,
+    };
+    console.log(objBill);
+    let uri_add_bill = API_URL + "bill";
+    fetch(uri_add_bill, {
+      method: "POST", // POST: Thêm mới, PUT: Sửa, DELETE: xóa, GET: lấy thông tin
+      headers: {
+        // Định dạng dữ liệu gửi đi
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(objBill), // chuyển đối tượng SP thành chuỗi JSON
+    })
+      .then((response) => {
+        // console.log(response.status);
+        // nếu log là 201 thì là tạo thành công
+        if (response.status == 201) alert("Thêm mới thành công");
+      })
+      .catch((err) => {
+        // catch để bắt lỗi ngoại lệ
+        console.log(err.message);
+      });
+  };
 
   const pickImageSau = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,6 +94,7 @@ const DonMuon = (props) => {
       });
     }
   };
+
   const pickImageTruoc = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -95,8 +144,27 @@ const DonMuon = (props) => {
       }
     }
   };
+  const getTotal = () => {
+    var tong = 0;
+    for (var i = 0; i < listBookByOrder.length; i++) {
+      tong +=
+        parseFloat(listBookByOrder[i].priceRent) *
+        parseInt(listBookByOrder[i].quantity);
+    }
+    setTotal(tong);
+    console.log(tong);
+  };
+  const onRefresh = React.useCallback(() => {
+    getTotal();
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+    setListBookMuon([...listBookByOrder]);
+  }, []);
 
   useEffect(() => {
+    getTotal();
     if (day > 9) {
       if (month > 9) {
         setDateRent(`${year}/${month}/${day}`);
@@ -114,13 +182,15 @@ const DonMuon = (props) => {
         return;
       }
     }
-  },[]);
+  }, []);
   const isDarkModeEnabled = () => {
     const colorScheme = Appearance.getColorScheme();
-    return colorScheme === 'dark';
-  }
+    return colorScheme === "dark";
+  };
   return (
     <ScrollView
+      refreshControl={<RefreshControl refreshing={refreshing} />}
+      nestedScrollEnabled={true}
       style={{ padding: 10, flex: 1 }}
       keyboardShouldPersistTaps="handled"
     >
@@ -134,20 +204,34 @@ const DonMuon = (props) => {
       >
         <View style={{ flexDirection: "row" }}>
           <Image
-            source={require("../Image/book.png")}
-            style={{ width: 15, height: 15, marginRight: 10,tintColor:color.xanh,marginTop:3}}
+            source={require("../../Image/book.png")}
+            style={{
+              width: 15,
+              height: 15,
+              marginRight: 10,
+              tintColor: color.xanh,
+              marginTop: 3,
+            }}
           />
-          <Text style={{ color: color.xanh, fontWeight: "bold",flex:1}}>
+          <Text style={{ color: color.xanh, fontWeight: "bold", flex: 1 }}>
             Sách mượn
           </Text>
           <TouchableOpacity
-          onPress={()=>props.navigation.navigate("ThemSachMuon")}
+            onPress={() =>
+              props.navigation.navigate("ThemSachMuon", { GetData: onRefresh })
+            }
           >
             <Text>Thêm sách mượn</Text>
           </TouchableOpacity>
         </View>
         <View>
-          <ItemSachPhieuMuon/>
+          <FlatList
+            data={listBookByOrder}
+            renderItem={({ item }) => (
+              <ItemSachPhieuMuon DataItem={item} GetData={onRefresh} />
+            )}
+            scrollEnabled={false}
+          />
         </View>
       </View>
       <View
@@ -160,21 +244,28 @@ const DonMuon = (props) => {
       >
         <View style={{ flexDirection: "row" }}>
           <Image
-            source={require("../Image/dolar.png")}
-            style={{ width: 15, height: 15, marginRight: 10,marginTop:3}}
+            source={require("../../Image/dolar.png")}
+            style={{ width: 15, height: 15, marginRight: 10, marginTop: 3 }}
           />
-          <Text style={{ color: color.xanh, fontWeight: "bold",flex:1}}>
+          <Text style={{ color: color.xanh, fontWeight: "bold", flex: 1 }}>
             Tổng tiền
           </Text>
         </View>
-        <View style={{justifyContent:'center',alignItems:'center',backgroundColor:color.xanhNhat,margin:10,padding:5,borderRadius:10}}>
-        <Text style={{fontSize:20,color:color.xanh,fontWeight:'bold'}}>1231312</Text>
-        <Text>
-          vnđ
-        </Text>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: color.xanhNhat,
+            margin: 10,
+            padding: 5,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={{ fontSize: 20, color: color.xanh, fontWeight: "bold" }}>
+            {total}
+          </Text>
+          <Text>vnđ</Text>
         </View>
-        
-
       </View>
       <View
         style={{
@@ -182,22 +273,42 @@ const DonMuon = (props) => {
           backgroundColor: "white",
           padding: 10,
           borderRadius: 10,
-          justifyContent:'center',
-          alignItems:'center'
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <View style={{alignItems:'flex-start',justifyContent:'flex-start' ,width:350}}>
-
-        
-        <View style={{ flexDirection: "row"}}>
-          <Image
-            source={require("../Image/user.png")}
-            style={{ width: 15, height: 15, marginRight: 10 }}
+        <View
+          style={{
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            width: 350,
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={require("../../Image/user.png")}
+              style={{ width: 15, height: 15, marginRight: 10 }}
+            />
+            <Text style={{ color: color.xanh, fontWeight: "bold" }}>
+              Thông tin người mượn
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: "gray",
+            marginTop: 10,
+            padding: 5,
+            borderRadius: 5,
+            marginRight: 5,
+            width: 320,
+          }}
+        >
+          <TextInput
+            placeholder="Nhập họ tên"
+            onChangeText={(Text) => setFullName(Text)}
           />
-          <Text style={{ color: color.xanh, fontWeight: "bold" }}>
-            Thông tin người mượn
-          </Text>
-        </View>
         </View>
         <View
           style={{
@@ -207,26 +318,16 @@ const DonMuon = (props) => {
             padding: 5,
             borderRadius: 5,
             marginRight: 5,
-            width:320
+            width: 320,
           }}
         >
-          <TextInput placeholder="Nhập họ tên" />
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "gray",
-            marginTop: 10,
-            padding: 5,
-            borderRadius: 5,
-            marginRight: 5,
-            width:320
-          }}
-        >
-          <TextInput placeholder="Nhập số điện thoại" />
+          <TextInput
+            placeholder="Nhập số điện thoại"
+            onChangeText={(Text) => setPhone(Text)}
+          />
         </View>
         {anhMatTruoc ? (
-          <TouchableOpacity onPress={pickImageTruoc} >
+          <TouchableOpacity onPress={pickImageTruoc}>
             <Image
               onPress={() => console.log("Long")}
               source={{ uri: anhMatTruoc }}
@@ -251,7 +352,7 @@ const DonMuon = (props) => {
             onPress={pickImageTruoc}
           >
             <Image
-              source={require("../Image/add.png")}
+              source={require("../../Image/add.png")}
               style={{ width: 30, height: 30 }}
             />
             <Text style={{ color: color.xanh, marginTop: 10 }}>
@@ -285,7 +386,7 @@ const DonMuon = (props) => {
             onPress={pickImageSau}
           >
             <Image
-              source={require("../Image/add.png")}
+              source={require("../../Image/add.png")}
               style={{ width: 30, height: 30 }}
             />
             <Text style={{ color: color.xanh, marginTop: 10 }}>
@@ -306,7 +407,7 @@ const DonMuon = (props) => {
       >
         <View style={{ flexDirection: "row" }}>
           <Image
-            source={require("../Image/bill.png")}
+            source={require("../../Image/bill.png")}
             style={{
               width: 15,
               height: 15,
@@ -340,23 +441,31 @@ const DonMuon = (props) => {
             </TouchableOpacity>
           </View>
         )}
-       
       </View>
       <TouchableOpacity
-        style={{marginBottom:30,justifyContent:'center',alignItems:'center',backgroundColor:color.xanh,padding:10,borderRadius:5}}
+        style={{
+          marginBottom: 30,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: color.xanh,
+          padding: 10,
+          borderRadius: 5,
+        }}
+        onPress={AddBill}
       >
-          <Text style={{fontSize:18,color:'white'}}>Đặt hàng</Text>
-        </TouchableOpacity>
+        <Text style={{ fontSize: 18, color: "white" }}>Đặt hàng</Text>
+      </TouchableOpacity>
       <View>
-      
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
-          textColor={isDarkModeEnabled() ? 'white' : 'black'}
-          backgroundColor={isDarkModeEnabled() ? 'black' : 'white'}
-          datePickerContainerStyleIOS={{backgroundColor: isDarkModeEnabled() ? 'black' : 'white'}}
+          textColor={isDarkModeEnabled() ? "white" : "black"}
+          backgroundColor={isDarkModeEnabled() ? "black" : "white"}
+          datePickerContainerStyleIOS={{
+            backgroundColor: isDarkModeEnabled() ? "black" : "white",
+          }}
         />
       </View>
     </ScrollView>

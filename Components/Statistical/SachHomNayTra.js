@@ -7,10 +7,10 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import color from "./color";
-import ItemHoaDon from "./ItemHoaDon";
+import color from "../color";
+import ItemHoaDon from "../Bills/ItemHoaDon";
 
-const DoanhThuNgayChiTiet = (props) => {
+const SachHomNayTra = (props) => {
   const list = [1,2,3,4,5]
   return (
     <View style={{padding:10,flex:1}}>
@@ -44,9 +44,9 @@ const DoanhThuNgayChiTiet = (props) => {
         <Text  >22222222222222 vnđ</Text>
       </View>
       <View style={{marginLeft:10,flexDirection:'row',marginBottom:20}} >
-        <Text style={{marginRight:10}}>Tổng số</Text>
-        <Text  >12 phiếu mượn</Text>
-      </View>
+      <Text style={{marginRight:10}}>Tổng số</Text>
+      <Text  >12 phiếu mượn</Text>
+    </View>
       <View style={{flex:1}}>
         <FlatList
         data={list}
@@ -60,6 +60,6 @@ const DoanhThuNgayChiTiet = (props) => {
   );
 };
 
-export default DoanhThuNgayChiTiet;
+export default SachHomNayTra;
 
 const styles = StyleSheet.create({});

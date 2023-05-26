@@ -7,10 +7,10 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import color from "./color";
-import ItemHoaDon from "./ItemHoaDon";
+import color from "../color";
+import ItemHoaDon from "../Bills/ItemHoaDon";
 
-const SachQuaHan = (props) => {
+const SachDangMuon = (props) => {
   const list = [1,2,3,4,5]
   return (
     <View style={{padding:10,flex:1}}>
@@ -60,6 +60,6 @@ const SachQuaHan = (props) => {
   );
 };
 
-export default SachQuaHan;
+export default SachDangMuon;
 
 const styles = StyleSheet.create({});

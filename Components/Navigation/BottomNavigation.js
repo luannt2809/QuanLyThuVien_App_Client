@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import TrangChu from './TrangChu';
-import TimKiem from './Books/Sach';
-import DonMuon from './DonMuon';
-import Khac from './Khac';
-import color from './color';
+import TrangChu from '../TrangChu';
+import TimKiem from '../Books/Sach';
+import DonMuon from '../Bills/DonMuon';
+import Khac from '../Khac';
+import color from '../color';
 import { AntDesign } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import Sach from './Books/Sach';
+import Sach from '../Books/Sach';
 
 
 
