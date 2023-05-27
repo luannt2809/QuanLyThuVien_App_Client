@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Khac = () => {
+const Khac = (props) => {
   return (
     <View>
-      <Text>Khac</Text>
+      <Text onPress={()=>props.navigation.navigate("Login")}>Khac</Text>
     </View>
   )
 }
