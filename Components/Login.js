@@ -1,11 +1,53 @@
-import { StyleSheet, Text, TouchableOpacity, View,TextInput, Image } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View,TextInput, Image,Alert } from 'react-native'
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { API_URL } from '../API__/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = (props) => {
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [passwd, setPasswd] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
+  ////////////
+  const doLogin = ()=>{
+    if(username.length==0){
+      Alert.alert('Thông báo','Chưa nhập username');
+      return;
+    }
+    if(passwd.length==0){
+      Alert.alert('Thông báo','Chưa nhập password');
+      return;
+    }
+    let url_login = API_URL+'login';
+    const payLoad = {username:username,passwd:passwd};
+    fetch(url_login, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payLoad)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status==200) {
+          // Đăng nhập thành công
+          props.navigation.navigate("Bottom")
+          Alert.alert('Thông báo', 'Đăng nhập thành công');
+          console.log(data.data.fullname);
+        } else if(data.status==204) {
+          // Đăng nhập thất bại
+          Alert.alert('Thông báo', 'Tên đăng nhập hoặc mật khẩu không đúng');
+          
+        } else{
+          Alert.alert('Thông báo', 'Tài khoản không tồn tại');
+        }
+      })
+      .catch(error => {
+        console.log('Lỗi đăng nhập:', error);
+        Alert.alert('Lỗi', 'Đã xảy ra lỗi trong quá trình đăng nhập');
+      });
+  }
+  ///////////
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -16,11 +58,15 @@ const Login = (props) => {
       <View>
         <View style={styles.boxInput1}>
           <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//user.png')}/>
-          <TextInput style={styles.boxInput2}  placeholder='Tên đăng nhập' textContentType={'username'}/>
+          <TextInput style={styles.boxInput2}  placeholder='Tên đăng nhập' textContentType={'username'}
+          onChangeText={(txt)=>{setUsername(txt)}}
+          />
         </View>
         <View style={styles.boxInput1}>
           <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//passwd.png')}/>
-          <TextInput style={styles.boxInput2} placeholder='Mật khẩu' textContentType='password' secureTextEntry={!showPassword}/>   
+          <TextInput style={styles.boxInput2} placeholder='Mật khẩu' textContentType='password' secureTextEntry={!showPassword}
+          onChangeText={(txt)=>{setPasswd(txt)}}
+          />   
           {/* <Image style={{width:15,height:15,alignSelf:'center'}} source={require('../assets//hidepasswd.png')}/> */}
 
           <TouchableOpacity onPress={toggleShowPassword} style={{justifyContent:'center',marginTop:6}}>
@@ -31,7 +77,7 @@ const Login = (props) => {
       </View>
       <TouchableOpacity
       style={styles.boxBtn1}
-      onPress={()=>props.navigation.navigate("Bottom")}
+      onPress={doLogin}
       >
         <Text style={{color:'#fff'}}>Đăng nhập</Text>
       </TouchableOpacity>
