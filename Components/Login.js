@@ -28,12 +28,19 @@ const Login = (props) => {
       body: JSON.stringify(payLoad)
     })
       .then(response => response.json())
-      .then(data => {
+      .then(async(data) => {
         if (data.status==200) {
           // Đăng nhập thành công
-          props.navigation.navigate("Bottom")
-          Alert.alert('Thông báo', 'Đăng nhập thành công');
-          console.log(data.data.fullname);
+          let objProfile = data;
+          try {
+            await AsyncStorage.setItem("Login",JSON.stringify(objProfile));
+            props.navigation.navigate("Bottom")
+            Alert.alert('Thông báo', 'Đăng nhập thành công');
+            console.log(data);
+          } catch (error) {
+            console.log(error);
+          }
+          
         } else if(data.status==204) {
           // Đăng nhập thất bại
           Alert.alert('Thông báo', 'Tên đăng nhập hoặc mật khẩu không đúng');
