@@ -35,7 +35,7 @@ const ChiTietSach = ({route, navigation}) => {
         try {
             const response = await fetch(url_chitiet); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
-            console.log(jsonSP);
+           // console.log(jsonSP);
             setListchitietSach(jsonSP.data);
 
         } catch (error) {

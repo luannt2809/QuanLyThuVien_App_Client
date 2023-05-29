@@ -36,7 +36,7 @@ const TimkiemSach = (props) => {
         try {
             const response = await fetch(API_URL+'books'); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
-            console.log(jsonSP);
+            //console.log(jsonSP);
             setListbooks(jsonSP.data);
 
         } catch (error) {

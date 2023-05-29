@@ -1,8 +1,48 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import color from "../color";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '../../API__/api';
 
 const Profile = (props) => {
+
+    const [profile, setprofile] = useState(null)
+    const [obju, setobju] = useState({})
+
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem("Login")
+
+            if (value !== null) {
+                setobju(JSON.parse(value));
+                // console.log(obju._id);
+            }
+        } catch (error) {
+
+            console.log(error);
+        }
+    }
+
+    const getDataProfile = async () => {
+
+        try {
+            const response = await fetch(API_URL + `account/${obju._id}`); //lấy dữ liệu về 
+            const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
+            // console.log(jsonSP);
+            setprofile(jsonSP.data);
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+
+        }
+    }
+
+
+    React.useEffect(() => {
+        getData();
+       // getDataProfile();
+    }, [])
     return (
         <View>
             <View style={{ backgroundColor: color.xanhNhat, height: '42%', width: '100%', borderBottomLeftRadius: 40, borderBottomRightRadius: 40, elevation: 10 }}>

@@ -1,7 +1,8 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import color from '../color'
 import { API_URL } from '../../API__/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const ChangePassword = () => {
@@ -10,6 +11,8 @@ const ChangePassword = () => {
     const [newpasswd, setnewpasswd] = useState("")
     const [rpnewpasswd, setrpnewpasswd] = useState("")
     const [erro, seterro] = useState("")
+    const [obju, setobju] = useState({})
+    const [isloading, setisloading] = useState(false)
 
 
   const Validate = () => {
@@ -33,46 +36,72 @@ const ChangePassword = () => {
      
   }
 
+  const getData=async()=>{
+    try {
+      const value = await AsyncStorage.getItem("Login")
+      if (value!==null ) {
+        setobju(JSON.parse(value));
+        console.log(obju.username);
+      }
+    } catch (error) {
+      
+    }
+  }
+   
+  React.useEffect(() => {
+    getData();
+  },[])
+
   var data ={
-    username:"Kento",
+    username: obju.username,
     passwd:oldpasswd
   }
 
   const CheckPass = () => {
+
     if (Validate() == true) {
-      fetch(API_URL +"confiPass", {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      })
-        .then((response) => { return response.json(); 
-        }).then(data => {
-           console.log(data);
-           if (data.data==true){
-             seterro(data.message)
-             Update();
-           }else{
-            seterro("Mật khẩu không trùng khớp");
-           }
+      setisloading(true)
+      try {
+        fetch(API_URL + "confiPass", {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
         })
-        .catch((err) => {
-          console.log(err);
-        });
+          .then((response) => {
+            return response.json();
+          }).then(data => {
+            console.log(data);
+            if (data.data == true) {
+              seterro(data.message)
+              Update();
+            } else {
+              seterro("Mật khẩu không trùng khớp");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      } catch (error) {
+         console.log(error);
+      }finally{
+        setisloading(false)
+      }
+     
     }
   }
 
   const Update = () => {
 
-    fetch(API_URL + "account/646f69dc4b5081fee60bd262", {
+    fetch(API_URL + "account/"+obju._id, {
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           passwd:newpasswd
-        }
-        )
+        })
+        
       }).then((res) => {
         seterro('Cập nhật thành công')
       }).catch((err) => {
@@ -84,6 +113,7 @@ const ChangePassword = () => {
 
   return (
     <View style={{backgroundColor:'white', flex:1}}>
+    <ActivityIndicator size="large" color={color.xanh} animating={isloading} />
         <View style={styles.input}>
         <Text style={{ color:color.xanh, fontSize:17, marginBottom:5}}>Mật khẩu cũ </Text>
         <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text) => { setoldpasswd(text) }}></TextInput>

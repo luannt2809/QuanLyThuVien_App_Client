@@ -31,12 +31,12 @@ const Login = (props) => {
       .then(async(data) => {
         if (data.status==200) {
           // Đăng nhập thành công
-          let objProfile = data;
+          let objProfile = data.data;
           try {
             await AsyncStorage.setItem("Login",JSON.stringify(objProfile));
             props.navigation.navigate("Bottom")
             Alert.alert('Thông báo', 'Đăng nhập thành công');
-            console.log(data);
+          //  console.log(data);
           } catch (error) {
             console.log(error);
           }

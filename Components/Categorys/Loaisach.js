@@ -46,7 +46,7 @@ const Loaisach = (props) => {
         try {
             const response = await fetch(API_URL+'categorys'); //lấy dữ liệu về 
             const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
-            console.log(jsonSP);
+           // console.log(jsonSP);
             setListcategory(jsonSP.data);
 
         } catch (error) {
