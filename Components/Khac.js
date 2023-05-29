@@ -31,7 +31,7 @@ const Khac = (props) => {
   return (
     <View>
       <Text onPress={()=>props.navigation.navigate("Login")}>Khac</Text>
-      <Text style={{fontSize:20,fontWeight:'bold',color:'#777777',padding:5,paddingLeft:10}}>1. {objAccountInfo.data.fullname}</Text>
+      <Text style={{fontSize:20,fontWeight:'bold',color:'#777777',padding:5,paddingLeft:10}}>1. {objAccountInfo.fullname}</Text>
     </View>
   )
 }

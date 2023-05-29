@@ -116,15 +116,15 @@ const ChangePassword = () => {
     <ActivityIndicator size="large" color={color.xanh} animating={isloading} />
         <View style={styles.input}>
         <Text style={{ color:color.xanh, fontSize:17, marginBottom:5}}>Mật khẩu cũ </Text>
-        <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text) => { setoldpasswd(text) }}></TextInput>
+        <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text) => { setoldpasswd(text) }} secureTextEntry={true}></TextInput>
         </View>
       <View style={styles.input}>
         <Text style={{ color: color.xanh, fontSize: 17, marginBottom: 5 }}>Mật khẩu mới </Text>
-        <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text)=>{setnewpasswd(text)}}></TextInput>
+        <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text) => { setnewpasswd(text) }} secureTextEntry={true}></TextInput>
       </View>
       <View style={styles.input}>
         <Text style={{ color: color.xanh, fontSize: 17, marginBottom: 5 }}>Nhập lại mật khẩu mới</Text>
-        <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text) => { setrpnewpasswd(text) }}></TextInput>
+        <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text) => { setrpnewpasswd(text) }} secureTextEntry={true}></TextInput>
       </View>
        
        <Text style={{color:'red', textAlign:'center', marginTop:20, fontWeight:600}}>{erro}</Text>
