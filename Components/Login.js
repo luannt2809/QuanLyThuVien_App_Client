@@ -35,7 +35,7 @@ const Login = (props) => {
           try {
             await AsyncStorage.setItem("Login",JSON.stringify(objProfile));
             props.navigation.navigate("Bottom")
-            Alert.alert('Thông báo', 'Đăng nhập thành công');
+           // Alert.alert('Thông báo', 'Đăng nhập thành công');
           //  console.log(data);
           } catch (error) {
             console.log(error);
