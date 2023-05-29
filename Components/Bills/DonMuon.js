@@ -42,11 +42,11 @@ const DonMuon = (props) => {
     const upateList = listBookMuon.map(
       ({ image, nameBook, priceRent, ...res }) => res
     );
-    let listAnh = [anhMatTruoc.toString(),anhMatSau.toString()];
+    
     const objBill = {
       "bookId": upateList,
       "accountId": "645cef980a72a983efde2cb9",
-      "imageCCCD":listAnh,
+      "imageCCCD":[anhMatTruoc,anhMatSau],
       "datePay": datePay,
       "dateRent": dateRent,
       "fullname": fullname,
@@ -80,8 +80,7 @@ const DonMuon = (props) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+      
     });
     if (!result.canceled) {
       let _uri = result.assets[0].uri;
@@ -95,12 +94,22 @@ const DonMuon = (props) => {
     }
   };
 
+  // const pickImageTruoc = () => {
+  //   ImagePicker.showImagePicker({ title: 'Select Image' }, response => {
+  //     if (!response.didCancel && !response.error) {
+  //       const source = { uri: response.uri };
+  //       const imageData = 'data:image/jpeg;base64,' + response.data;
+  //       setAnhMatTruoc(imageData);
+  //       // imageData chứa chuỗi Base64 của ảnh
+  //       // Tiếp tục xử lý imageData theo nhu cầu của bạn
+  //     }
+  //   });
+  // };
+
   const pickImageTruoc = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
     });
     if (!result.canceled) {
       let _uri = result.assets[0].uri;
