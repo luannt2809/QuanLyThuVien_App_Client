@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Alert, BackHandler, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import TrangChu from '../TrangChu';
 import TimKiem from '../Books/Sach';
@@ -16,7 +16,30 @@ import Sach from '../Books/Sach';
 
 
 const BottomNavigation = () => {
+
   const Tab = createBottomTabNavigator();
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Thông Báo','Bạn có chắc chắn muốn thoát ?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: 'YES', onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <Tab.Navigator
     screenOptions={({ route }) => ({

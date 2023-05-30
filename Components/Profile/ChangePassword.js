@@ -16,6 +16,7 @@ const ChangePassword = () => {
 
 
   const Validate = () => {
+
     if (oldpasswd.length == 0) {
       seterro('Nhập mật khẩu cũ')
       return false;
@@ -41,7 +42,7 @@ const ChangePassword = () => {
       const value = await AsyncStorage.getItem("Login")
       if (value!==null ) {
         setobju(JSON.parse(value));
-        console.log(obju.username);
+       // console.log(obju.username);
       }
     } catch (error) {
       
@@ -58,9 +59,8 @@ const ChangePassword = () => {
   }
 
   const CheckPass = () => {
-
     if (Validate() == true) {
-      setisloading(true)
+      setisloading(true);
       try {
         fetch(API_URL + "confiPass", {
           method: 'POST',
@@ -75,7 +75,7 @@ const ChangePassword = () => {
           }).then(data => {
             console.log(data);
             if (data.data == true) {
-              seterro(data.message)
+             // seterro(data.message)
               Update();
             } else {
               seterro("Mật khẩu không trùng khớp");
@@ -87,14 +87,13 @@ const ChangePassword = () => {
       } catch (error) {
          console.log(error);
       }finally{
-        setisloading(false)
+       //setisloading(false)
       }
      
     }
   }
 
   const Update = () => {
-
     fetch(API_URL + "account/"+obju._id, {
         method: "PUT",
         headers: { "content-type": "application/json" },
@@ -104,6 +103,7 @@ const ChangePassword = () => {
         
       }).then((res) => {
         seterro('Cập nhật thành công')
+        setisloading(false);
       }).catch((err) => {
         console.log(err.message)
       })
@@ -113,7 +113,7 @@ const ChangePassword = () => {
 
   return (
     <View style={{backgroundColor:'white', flex:1}}>
-    <ActivityIndicator size="large" color={color.xanh} animating={isloading} />
+      <ActivityIndicator size="large" color={color.xanh} animating={isloading} />
         <View style={styles.input}>
         <Text style={{ color:color.xanh, fontSize:17, marginBottom:5}}>Mật khẩu cũ </Text>
         <TextInput style={{ borderBottomWidth: 0.5, borderBottomColor: "#000" }} onChangeText={(text) => { setoldpasswd(text) }} secureTextEntry={true}></TextInput>
