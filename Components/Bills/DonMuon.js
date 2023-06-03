@@ -1,7 +1,9 @@
 import {
+  Alert,
   Button,
   FlatList,
   Image,
+  Modal,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -19,6 +21,7 @@ import ItemSachPhieuMuon from "./ItemSachPhieuMuon";
 import { Appearance } from "react-native";
 import listBookByOrder from "../ListBookByOrder/listBookByOrder";
 import { API_URL } from "../../API__/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const DonMuon = (props) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -34,18 +37,49 @@ const DonMuon = (props) => {
   const day = currentDate.getDate();
   const month = currentDate.getMonth() + 1;
   const year = currentDate.getFullYear();
-  const AddBill = () => {
+  const [obju,setobju] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
+
+
+
+  const AddBill = async () => {
+    
     if (listBookMuon.length == 0) {
-      alert("Banj chua chon sach");
+      Alert.alert("Thông báo","Bạn chưa chọn sách mượn");
       return;
     }
+    if(fullname.length == 0){
+      Alert.alert("Thông báo","Họ tên không được bỏ trống");
+      return;
+    }
+    if(phone.length == 0){
+      Alert.alert("Thông báo","Số điện không được bỏ trống");
+      return;
+    }
+    
+    if(anhMatTruoc == null){
+      Alert.alert("Thông báo","Bạn chưa chọn ảnh mặt trước công dân");
+      return;
+    }
+    if(anhMatSau == null){
+      Alert.alert("Thông báo","Bạn chưa chọn ảnh mặt sau công dân");
+      return;
+    }
+    if(datePay == null){
+      Alert.alert("Thông báo","Bạn chưa chọn ngày trả sách");
+      return;
+    }
+
+
+
     const upateList = listBookMuon.map(
       ({ image, nameBook, priceRent, ...res }) => res
     );
     
     const objBill = {
       "bookId": upateList,
-      "accountId": "645cef980a72a983efde2cb9",
+      "accountId": obju._id,
       "imageCCCD":[anhMatTruoc,anhMatSau],
       "datePay": datePay,
       "dateRent": dateRent,
@@ -54,7 +88,6 @@ const DonMuon = (props) => {
       "status": 0,
       "totalPrice": total,
     };
-    console.log(objBill);
     let uri_add_bill = API_URL + "bill";
     fetch(uri_add_bill, {
       method: "POST", // POST: Thêm mới, PUT: Sửa, DELETE: xóa, GET: lấy thông tin
@@ -66,9 +99,18 @@ const DonMuon = (props) => {
       body: JSON.stringify(objBill), // chuyển đối tượng SP thành chuỗi JSON
     })
       .then((response) => {
-        // console.log(response.status);
-        // nếu log là 201 thì là tạo thành công
-        if (response.status == 201) alert("Thêm mới thành công");
+        
+        
+          setModalVisible(true);
+          setAnhMatSau(null);
+          setAnhMatTruoc(null);
+          setFullName("");
+
+          setPhone("");
+          setDatePay(null);
+          listBookByOrder.splice(0,listBookByOrder.length);
+          onRefresh();
+        
       })
       .catch((err) => {
         // catch để bắt lỗi ngoại lệ
@@ -89,22 +131,10 @@ const DonMuon = (props) => {
         encoding: "base64",
       }).then((res) => {
         setAnhMatSau("data:image:/" + file_ext + ";base64," + res);
-        // console.log(anhMatSau);
       });
     }
   };
 
-  // const pickImageTruoc = () => {
-  //   ImagePicker.showImagePicker({ title: 'Select Image' }, response => {
-  //     if (!response.didCancel && !response.error) {
-  //       const source = { uri: response.uri };
-  //       const imageData = 'data:image/jpeg;base64,' + response.data;
-  //       setAnhMatTruoc(imageData);
-  //       // imageData chứa chuỗi Base64 của ảnh
-  //       // Tiếp tục xử lý imageData theo nhu cầu của bạn
-  //     }
-  //   });
-  // };
 
   const pickImageTruoc = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -171,8 +201,15 @@ const DonMuon = (props) => {
     }, 2000);
     setListBookMuon([...listBookByOrder]);
   }, []);
-
+  const getDataUser = async ()=>{
+    let value = await AsyncStorage.getItem("Login")
+    if (value !== null) {
+      setobju(JSON.parse(value));
+      return
+    }
+  }
   useEffect(() => {
+    getDataUser();
     getTotal();
     if (day > 9) {
       if (month > 9) {
@@ -315,6 +352,7 @@ const DonMuon = (props) => {
           }}
         >
           <TextInput
+          value={fullname}
             placeholder="Nhập họ tên"
             onChangeText={(Text) => setFullName(Text)}
           />
@@ -331,6 +369,7 @@ const DonMuon = (props) => {
           }}
         >
           <TextInput
+            value={phone}
             placeholder="Nhập số điện thoại"
             onChangeText={(Text) => setPhone(Text)}
           />
@@ -451,6 +490,7 @@ const DonMuon = (props) => {
           </View>
         )}
       </View>
+      
       <TouchableOpacity
         style={{
           marginBottom: 30,
@@ -464,6 +504,7 @@ const DonMuon = (props) => {
       >
         <Text style={{ fontSize: 18, color: "white" }}>Đặt hàng</Text>
       </TouchableOpacity>
+      
       <View>
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -477,6 +518,37 @@ const DonMuon = (props) => {
           }}
         />
       </View>
+      
+      <Modal
+      visible={modalVisible}
+      animationType="none"
+      transparent={true}
+      onRequestClose={()=>{
+        setModalVisible(false);
+      }}
+      >
+        <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'gray',opacity:0.9}}>
+          <View style={{backgroundColor:color.xanh,width:300,padding:30,justifyContent:'center',alignItems:'center',borderRadius:20,zIndex:1}}>
+            <Image
+            source={require('../../Image/check.png')}
+            style={{width:100,height:100}}
+            />
+            
+            <View style={{margin:10}}>
+              <Text style={{fontSize:22,color:'white'}}>Đặt thành công</Text>
+            </View>
+            
+            <TouchableOpacity 
+            style={{backgroundColor:'red',borderRadius:10,marginTop:20,padding:10,justifyContent:'center',alignItems:'center',width:250}}
+            onPress={()=>setModalVisible(false)}
+            >
+              <Text style={{color:'white',fontWeight:'bold'}}>
+                Đóng
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
