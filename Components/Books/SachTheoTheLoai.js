@@ -4,6 +4,7 @@ import { Image } from 'react-native'
 import { EvilIcons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { API_URL } from '../../API__/api';
+import color from '../color'
 
 
 const numColumns2 = 2;
@@ -98,7 +99,7 @@ const SachTheoTheLoai = ({navigation, route}) => {
         borderRadius: 10,
         marginLeft: 10
       }}>
-        <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }}  onPress={searchbook}/>
+        <EvilIcons name="search" size={24} color={color.xanh} style={{ marginLeft: 1, marginRight: 4 }}  onPress={searchbook}/>
         <TextInput placeholder='Search' style={{ width: '90%' }}
         // underlineColorAndroid="transparent"
         onChangeText={(text)=>{setsearch(text)}}

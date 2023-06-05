@@ -1,44 +1,24 @@
 import {
   FlatList,
+  RefreshControl,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import color from "../color";
 import ItemHoaDon from "../Bills/ItemHoaDon";
 import { API_URL } from "../../API__/api";
 
-const SachHomNayMuon = (props) => {
-  const list = [1,2,3,4,5]
+const SachHomNayMuon = ({ navigation,route}) => {
+
   const [countbillDay, setcountbillday] = useState()
-  const [DateCurrent, setDateCurrent] = useState(null)
+  const [DateCurrent, setDateCurrent] = useState(route.params.dateRent)
   const [listBillRent, setlistBillRent] = useState([])
   const [data, setdata] = useState([])
-
-  const date = () => {
-    const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    //const getDate = year + "/" + month + "/" + day;
-
-    if (day > 9) {
-      if (month > 9) {
-        setDateCurrent(`${year}/${month}/${day}`);
-      } else {
-        setDateCurrent(`${year}/0${month}/${day}`);
-      }
-    } else {
-      if (month > 9) {
-        setDateCurrent(`${year}/${month}/0${day}`);
-      } else {
-        setDateCurrent(`${year}/0${month}/0${day}`);
-      }
-    }
-  }
+  const [reloading, setreloading] = useState(false)
 
   const getDataRent = async () => {
     try {
@@ -47,18 +27,37 @@ const SachHomNayMuon = (props) => {
       setcountbillday(jsonSP.data.countBillStatus);
       setlistBillRent(jsonSP.data.billStatus);
       setdata(jsonSP.data);
-      //sconsole.log(listBillRent);
-     // console.log(jsonSP.data.countBillStatus);
     } catch (error) {
       console.log(error);
+    }finally{
+
     }
   }
 
 
-  React.useEffect(()=>{
-    date();
+  const realoadData = React.useCallback(() => {
+    setreloading(true); 
+   // date();
     getDataRent();
+
+    setTimeout(() => {
+      setreloading(false);
+    }, 2000);
   })
+
+  React.useEffect(()=>{
+   // date();
+    getDataRent();
+  },[])
+
+  // React.useEffect(() => {
+  //   const unsubscribe = props.navigation.addListener('focus', () => {
+  //     // do something
+  //     date();
+  //     getDataRent();
+  //   });
+  //   return unsubscribe;
+  // }, [props.navigation.navigate]);
 
   return (
     <View style={{padding:10,flex:1}}>
@@ -99,8 +98,11 @@ const SachHomNayMuon = (props) => {
         <FlatList
         data={listBillRent}
         renderItem={({item})=>
-          <ItemHoaDon DataItem={item} />
-      }
+          <ItemHoaDon DataItem={item} /> }
+
+          refreshControl={
+            <RefreshControl refreshing={reloading} onRefresh={realoadData} />
+          }
         />
       </View>
       
