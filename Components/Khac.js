@@ -21,6 +21,7 @@ const Khac = (props) => {
   const [objAccountInfo, setobjAccountInfo] = useState({});
   const getAccountInfo = async () => {
     try {
+
       const value = await AsyncStorage.getItem("Login");
       console.log("Lấy dữ liệu" + value);
       if (value !== null) {
