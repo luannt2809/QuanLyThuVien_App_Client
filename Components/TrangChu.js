@@ -2,11 +2,14 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "rea
 import React, { useEffect, useState } from "react";
 import color from "./color";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_URL } from "../API__/api";
 
 const TrangChu = (props) => {
 
   const [profile, setprofile] = useState(null)
   const [obju, setobju] = useState({})
+  const [DateCurrent, setDateCurrent] = useState(null)
+  const [data, setdata] = useState([])
 
   const getData = async () => {
     try {
@@ -14,7 +17,7 @@ const TrangChu = (props) => {
 
       if (value !== null) {
         setobju(JSON.parse(value));
-        console.log(obju._id);
+       // console.log(obju._id);
       }
     } catch (error) {
 
@@ -22,14 +25,51 @@ const TrangChu = (props) => {
     }
   }
 
-  const currentDate = new Date();
-  const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1;
-  const year = currentDate.getFullYear();
-  const getDate = day + "/" + month + "/" + year;
-  useEffect(()=>{
-    console.log(year);
+  
+
+
+
+  const date=()=>{
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    //const getDate = year + "/" + month + "/" + day;
+
+    if (day > 9) {
+      if (month > 9) {
+        setDateCurrent(`${year}/${month}/${day}`);
+      } else {
+        setDateCurrent(`${year}/0${month}/${day}`);
+      }
+    } else {
+      if (month > 9) {
+        setDateCurrent(`${year}/${month}/0${day}`);
+      } else {
+        setDateCurrent(`${year}/0${month}/0${day}`);
+      }
+    }
+  }
+
+
+
+  const getDataRent = async () => {
+    try {
+      const response = await fetch(API_URL + "statiscalByDateRent?dateRent=" +DateCurrent);
+      const jsonSP= await response.json();
+      setdata(jsonSP.data);
+      console.log(jsonSP.data.countBillStatus);
+    } catch (error) {
+       console.log(error);
+    }
+  }
+
+  React.useEffect(()=>{
+    //console.log(year);
     getData();
+    getDataRent();
+    date();
+  
   },[])
 
   return (
@@ -81,12 +121,12 @@ const TrangChu = (props) => {
               Hôm nay
             </Text>
             <View style={{}}>
-              <Text style={{ color: "gray" }}>{getDate}</Text>
+              <Text style={{ color: "gray" }}>{DateCurrent}</Text>
             </View>
           </View>
 
           <View style={{ flexDirection: "row", marginTop: 5 }}>
-            <Text style={{ fontSize: 40 }}>12311234</Text>
+              <Text style={{ fontSize: 40 }}>{data.totalBill}</Text>
 
             <Text style={{ marginLeft: 5, flex: 1 }}>vnđ</Text>
             <TouchableOpacity
@@ -102,7 +142,7 @@ const TrangChu = (props) => {
             <Text style={{ fontSize: 20, color: color.xanh, flex: 1 }}>
               Tháng này
             </Text>
-            <Text style={{ color: "gray" }}>{getDate}</Text>
+            <Text style={{ color: "gray" }}>{DateCurrent}</Text>
           </View>
           <View style={{ flexDirection: "row", marginTop: 5 }}>
             <Text style={{ fontSize: 40 }}>12311234</Text>
@@ -140,12 +180,12 @@ const TrangChu = (props) => {
               Tổng số
             </Text>
             <View style={{}}>
-              <Text style={{ color: "gray" }}>{getDate}</Text>
+              <Text style={{ color: "gray" }}>{DateCurrent}</Text>
             </View>
           </View>
 
           <View style={{ flexDirection: "row", marginTop: 5 }}>
-            <Text style={{ fontSize: 40 }}>20</Text>
+              <Text style={{ fontSize: 40 }}>{data.countBillStatus}</Text>
 
             <Text style={{ marginLeft: 5, flex: 1 }}>phiếu mượn</Text>
             <TouchableOpacity
@@ -181,7 +221,7 @@ const TrangChu = (props) => {
               Tổng số
             </Text>
             <View style={{}}>
-              <Text style={{ color: "gray" }}>{getDate}</Text>
+              <Text style={{ color: "gray" }}>{DateCurrent}</Text>
             </View>
           </View>
 
@@ -222,7 +262,7 @@ const TrangChu = (props) => {
               Tổng số
             </Text>
             <View style={{}}>
-              <Text style={{ color: "gray" }}>{getDate}</Text>
+              <Text style={{ color: "gray" }}>{DateCurrent}</Text>
             </View>
           </View>
 
@@ -263,7 +303,7 @@ const TrangChu = (props) => {
               Tổng số
             </Text>
             <View style={{}}>
-              <Text style={{ color: "gray" }}>{getDate}</Text>
+              <Text style={{ color: "gray" }}>{DateCurrent}</Text>
             </View>
           </View>
 

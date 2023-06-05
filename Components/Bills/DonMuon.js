@@ -54,7 +54,7 @@ const DonMuon = (props) => {
       "status": 0,
       "totalPrice": total,
     };
-    console.log(objBill);
+    //console.log(objBill);
     let uri_add_bill = API_URL + "bill";
     fetch(uri_add_bill, {
       method: "POST", // POST: Thêm mới, PUT: Sửa, DELETE: xóa, GET: lấy thông tin

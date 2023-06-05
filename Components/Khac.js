@@ -13,7 +13,7 @@ const Khac = (props) => {
   const getAccountInfo = async()=>{
     try {
       const value = await AsyncStorage.getItem('Login');
-      console.log("Lấy dữ liệu" + value);
+     // console.log("Lấy dữ liệu" + value);
       if(value !==null){
         setobjAccountInfo(JSON.parse(value));
       }
