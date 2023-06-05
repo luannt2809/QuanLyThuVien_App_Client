@@ -22,6 +22,7 @@ import SachQuaHan from './Components/Statistical/SachQuaHan';
 import SachHomNayTra from './Components/Statistical/SachHomNayTra';
 import SachHomNayMuon from './Components/Statistical/SachHomNayMuon';
 import DoanhThuThangChiTiet from './Components/Statistical/DoanhThuThangChiTiet';
+import UpdateBills from './Components/Bills/UpdateBills';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -57,7 +58,7 @@ export default function App() {
         <Stack.Screen name='ThemSachMuon' component={ThemSachMuon} options={{title:'Thêm sách mượn'}}/>
         <Stack.Screen name='Profile' component={Profile} options={{ title: 'Profile' }} />
         <Stack.Screen name='Changepasswd' component={ChangePassword} options={{ title: 'Đổi mật khẩu' }} />
-
+        <Stack.Screen name='UpdateBills' component={UpdateBills} options={{title:"Cập nhật phiếu mượn"}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
