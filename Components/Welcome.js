@@ -11,7 +11,7 @@ const Welcome = (props) => {
   return (
     <View style={{alignItems:'center',flex:1,marginTop:200}}>
       <Image style={{width:100,height:100,alignSelf:'center',marginBottom:40}} source={require('../assets//library.png')}/>
-      <Text style={{color:'#584CF4',fontSize:24,fontWeight:'bold',marginBottom:30}}>Thư viện Ngũ Hảo Hán FPoly</Text>
+      <Text style={{color:'#584CF4',fontSize:24,fontWeight:'bold',marginBottom:30}}>Thư viện FPoly</Text>
       <ActivityIndicator size="large" color="#584CF4" />
       <Text style={styles.text}>Loading...</Text>
       <View style={{justifyContent:'center',alignItems:'center',paddingTop:50}}>
