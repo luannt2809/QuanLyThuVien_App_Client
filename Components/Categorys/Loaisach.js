@@ -2,7 +2,7 @@ import { FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, Touchable
 import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 import API, { API_URL } from '../../API__/api'
-
+import color from '../color'
 
 
 const numColumns = 2;
@@ -103,7 +103,7 @@ const Loaisach = (props) => {
                   marginLeft: 10
               }}>
               <TouchableOpacity onPress={search}>
-                  <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
+                  <EvilIcons name="search" size={24} color={color.xanh} style={{ marginLeft: 1, marginRight: 4 }} />
               </TouchableOpacity>
                 
                   <TextInput placeholder='Search' style={{width:'90%'}}

@@ -4,6 +4,7 @@ import { EvilIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native';
 import { Image } from 'react-native';
 import API, { API_URL } from '../../API__/api'
+import color from '../color'
 
 const numColumns = 2;
 
@@ -90,7 +91,7 @@ const TimkiemSach = (props) => {
               marginLeft: 10
           }}>
               <TouchableOpacity onPress={search}>
-                  <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }}  />
+                  <EvilIcons name="search" size={24} color={color.xanh} style={{ marginLeft: 1, marginRight: 4 }}  />
               </TouchableOpacity>
               <TextInput placeholder='Search' style={{ width: '90%' }}
               // underlineColorAndroid="transparent" 

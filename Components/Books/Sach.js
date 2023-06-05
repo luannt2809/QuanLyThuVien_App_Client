@@ -1,6 +1,7 @@
 import { FlatList, Image, RefreshControl, SectionList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { EvilIcons } from '@expo/vector-icons';
+import color from '../color'
 import API, { API_URL } from '../../API__/api'
 const numColumns2 = 2;
 
@@ -52,7 +53,7 @@ const Sach = (props) => {
     try {
       const response = await fetch(API_URL+'categorys'); //lấy dữ liệu về 
       const jsonSP = await response.json(); // chuyển dũ liêu thành đt json
-      console.log(jsonSP);
+      //console.log(jsonSP);
       setListcategory(jsonSP.data);
 
     } catch (error) {
@@ -112,7 +113,7 @@ const Sach = (props) => {
               borderRadius: 10,
               marginLeft: 10
             }}>
-              <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
+              <EvilIcons name="search" size={24} color={color.xanh} style={{ marginLeft: 1, marginRight: 4 }} />
               <Text placeholder='Search' style={styles.input}
               // underlineColorAndroid="transparent"
               >
@@ -156,7 +157,7 @@ const Sach = (props) => {
             borderRadius: 10,
             marginLeft: 10
           }}>
-            <EvilIcons name="search" size={24} color="black" style={{ marginLeft: 1, marginRight: 4 }} />
+            <EvilIcons name="search" size={24} color={color.xanh} style={{ marginLeft: 1, marginRight: 4 }} />
             <Text placeholder='Search' style={styles.input}
             // underlineColorAndroid="transparent"
             >
