@@ -38,7 +38,7 @@ const ItemThemSachMuon = (props) => {
       }
       listBookByOrder.push(objBook);
       props.GetData();
-      alert("Thêm thành công")
+      Alert.alert("Thông báo","Thêm thành công")
   }
   const TangSoLuong = ()=>{
     let tang = soLuong+1
