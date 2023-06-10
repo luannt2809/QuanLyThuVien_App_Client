@@ -333,7 +333,7 @@ const DonMuon = (props) => {
           <View style={{ flexDirection: "row" }}>
             <Image
               source={require("../../Image/user.png")}
-              style={{ width: 15, height: 15, marginRight: 10 }}
+              style={{ width: 15, height: 15, marginRight: 10,marginLeft: '5%' }}
             />
             <Text style={{ color: color.xanh, fontWeight: "bold" }}>
               Thông tin người mượn
@@ -347,7 +347,6 @@ const DonMuon = (props) => {
             marginTop: 10,
             padding: 5,
             borderRadius: 5,
-            marginRight: 5,
             width: 320,
           }}
         >
@@ -364,7 +363,6 @@ const DonMuon = (props) => {
             marginTop: 10,
             padding: 5,
             borderRadius: 5,
-            marginRight: 5,
             width: 320,
           }}
         >

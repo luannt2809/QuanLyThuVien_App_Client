@@ -59,7 +59,7 @@ const Login = (props) => {
     setShowPassword(!showPassword);
   };
   return (
-    <View style={{flex:1,alignItems:'center',backgroundColor:"#fff",paddingTop:'40%'}}>
+    <View style={{flex:1,alignItems:'center',backgroundColor:"#fff",paddingTop:'39%'}}>
       <Image style={{width:100,height:100,alignSelf:'center',marginBottom:40}} source={require('../assets//library.png')}/>
       <Text style={{color:'#584CF4',fontSize:20,fontWeight:'bold',marginBottom:30}}>Thư viện FPoly</Text>
       <View>
