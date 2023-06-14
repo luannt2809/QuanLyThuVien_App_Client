@@ -15,7 +15,7 @@ const Welcome = (props) => {
       <ActivityIndicator size="large" color="#584CF4" />
       <Text style={styles.text}>Loading...</Text>
       <View style={{justifyContent:'center',alignItems:'center',paddingTop:50}}>
-        <Text style={{fontSize:20,color:'#584CF4'}}>form</Text>
+        <Text style={{fontSize:20,color:'#584CF4'}}>from</Text>
         <Text style={{fontSize:24,fontWeight:'bold',color:'#584CF4'}}>Group 9</Text>
       </View>
       <StatusBar style='auto'/>
