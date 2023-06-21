@@ -54,7 +54,11 @@ const DonMuon = (props) => {
       return;
     }
     if(phone.length == 0){
-      Alert.alert("Thông báo","Số điện không được bỏ trống");
+      Alert.alert("Thông báo","Số điện thoại không được bỏ trống");
+      return;
+    }
+    if(phone.length != 10){
+      Alert.alert("Thông báo","Số điện thoại phải có 10 số");
       return;
     }
     
@@ -370,6 +374,7 @@ const DonMuon = (props) => {
             value={phone}
             placeholder="Nhập số điện thoại"
             onChangeText={(Text) => setPhone(Text)}
+            keyboardType="number-pad"
           />
         </View>
         {anhMatTruoc ? (
